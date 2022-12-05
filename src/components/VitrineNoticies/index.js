@@ -1,15 +1,7 @@
-import React, { useState, useRef, useEffect } from "react"
-import { StyleSheet, View, Image, TouchableOpacity, TouchableWithoutFeedback, StatusBar, Keyboard, Dimensions, ScrollView, SafeAreaView } from 'react-native';
-import { TextInput } from 'react-native-paper';
-import { LinearGradient } from 'expo-linear-gradient';
-import { MaskedTextInput } from "react-native-mask-text";
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
-import Input from "../../components/Input/index"
-import Link from "../../components/Link/index"
-import LinkWithText from "../../components/LinkWithText/index"
-import Button from "../../components/Button/index"
+import React from "react"
+import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
+
 import Text from "../../components/Text/index"
-import Carrousel from "../../components/Carrousel/index"
 export default function VitrineNoticies({ options }) {
 
     return (
@@ -23,7 +15,7 @@ export default function VitrineNoticies({ options }) {
                 {
                     options.map(item =>
                         <TouchableOpacity style={{ flex: 1 }}>
-                            <Image source={{ uri: item.img }} style={{ marginRight: 10, borderRadius: 10, height: 150, width: 150, flexDirection: "row", justifyContent: "center", resizeMode: "cover" }} />
+                            <Image source={item.img} style={{ marginRight: 10, borderRadius: 10, height: 150, width: 150, flexDirection: "row", justifyContent: "center", resizeMode: "cover" }} />
                         </TouchableOpacity>
                     )
                 }

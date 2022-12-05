@@ -1,15 +1,8 @@
-import React, { useState, useRef, useEffect } from "react"
-import { StyleSheet, View, Image, TouchableOpacity, TouchableWithoutFeedback, StatusBar, Keyboard, Dimensions, ScrollView, SafeAreaView } from 'react-native';
-import { TextInput } from 'react-native-paper';
+import React from "react"
+import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { MaskedTextInput } from "react-native-mask-text";
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
-import Input from "../../components/Input/index"
-import Link from "../../components/Link/index"
-import LinkWithText from "../../components/LinkWithText/index"
-import Button from "../../components/Button/index"
+import { scale } from 'react-native-size-matters';
 import Text from "../../components/Text/index"
-import Carrousel from "../../components/Carrousel/index"
 export default function Vitrine({ options }) {
 
     return (
@@ -25,7 +18,7 @@ export default function Vitrine({ options }) {
                         <TouchableOpacity>
                             <LinearGradient colors={item.gradient} style={{ marginBottom: 10, borderRadius: 10, height: 70, flexDirection: "row", justifyContent: "center" }} >
                                 <View style={{ flex: 2, flexDirection: "row", padding: 10, alignItems: "center" }}>
-                                    <Image source={{ uri: item.firstBrasao }} style={[styles.logo, { borderRadius: 100, height: 30, width: 30 }]} />
+                                    <Image source={item.firstBrasao} style={[styles.logo, { borderRadius: 100, height: 30, width: 30 }]} />
                                     <Text size={16} weight="medium" style={{ marginLeft: 10 }}>{item.firstName}</Text>
                                 </View>
                                 <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -33,7 +26,7 @@ export default function Vitrine({ options }) {
                                 </View>
                                 <View style={{ flex: 2, flexDirection: "row", padding: 10, alignItems: "center", justifyContent: "flex-end" }}>
                                     <Text size={16} weight="medium" style={{ marginRight: 10 }}>{item.secondName}</Text>
-                                    <Image source={{ uri: item.secondBrasao }} style={[styles.logo, { borderRadius: 100, height: 30, width: 30 }]} />
+                                    <Image source={item.secondBrasao} style={[styles.logo, { borderRadius: 100, height: 30, width: 30 }]} />
                                 </View>
 
                             </LinearGradient>
