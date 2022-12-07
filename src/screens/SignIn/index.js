@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react"
-import { StyleSheet, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { StyleSheet, View, Image, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import AppLoading from 'expo-app-loading';
@@ -9,44 +9,64 @@ import Input from "../../components/Input/index"
 import Link from "../../components/Link/index"
 import LinkWithText from "../../components/LinkWithText/index"
 import Button from "../../components/Button/index"
+import { connect } from "react-redux"
+import { register, cleanError } from '../../store/actions/authentication';
+import validateEmail from "../../utils/validateEmail";
+import * as Animatable from 'react-native-animatable';
+import Text from "../../components/Text/index"
 
-export default function SignIn({ navigation }) {
-    const [cpf, setCpf] = useState("")
+const SignIn = (props) => {
+    const [name, setName] = useState("")
     const [password, setPassword] = useState("")
     const [passwordConfirm, setPasswordConfirm] = useState("")
     const [email, setEmail] = useState("")
-    const [isSecurityText, setIsSecurityText] = useState(false)
-    const [isSecurityTextConfirm, setIsSecurityTextConfirm] = useState(false)
+    const [isSecurityText, setIsSecurityText] = useState(true)
+    const [isSecurityTextConfirm, setIsSecurityTextConfirm] = useState(true)
 
     const [step, setStep] = useState(1)
 
     const submit = () => {
-        if(step == 3){
-            navigation.navigate('Login')
-        }else{
-
-            setStep(step + 1)
+        if (step == 3) {
+            props.dispatch(cleanError())
+            props.dispatch(register(name, email, password, passwordConfirm))
+            // props.navigation.navigate('Login')
+        } else {
+            if (step == 1 && name == "") {
+                Alert.alert("Preencha o seu nome")
+            } else if (step == 2 && (email == "" || !validateEmail(email))) {
+                Alert.alert("verifique o email preenchido")
+            } else if (step == 3 && (password == "" || passwordConfirm == "")) {
+                Alert.alert("Preencha a senha e a confirmação de senha")
+            } else if (step == 3 && (password != passwordConfirm)) {
+                Alert.alert("As senhas não correspondem")
+            } else {
+                setStep(step + 1)
+            }
         }
     }
+
+    useEffect(() => {
+        console.warn("erroreeee", props.error)
+        props.error != null && Alert.alert(props.error)
+    }, [props.error])
 
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={styles.container}>
                 <Image source={require("../../../assets/home.jpg")} style={[styles.image]} />
-                <Image source={require("../../../assets/logo.png")} style={styles.logo} />
+                <Animatable.Image animation="slideInDown" source={require("../../../assets/logo.png")} style={styles.logo} />
                 <LinearGradient colors={['transparent', 'rgba(0,0,0,.7)', 'black']} style={styles.degrade} />
-                <Text adjustsFontSizeToFit style={styles.text}>Cadastro Coppyfy</Text>
-                <View style={styles.inputs}>
+                <Animatable.View animation="slideInRight"><Text size={25} weight="bold" adjustsFontSizeToFit style={styles.text}>Cadastro</Text></Animatable.View>
+                <Animatable.View animation="fadeIn" style={styles.inputs}>
                     {
                         (step == 1 || step == 2) && (
                             <Input
-                                placeholder="CPF"
-                                type="cpf"
+                                placeholder="Nome"
                                 autoFocus={true}
-                                value={cpf}
+                                value={name}
                                 onChange={(text, un) => {
-                                    setCpf(un);
-                                    
+                                    setName(un);
+
                                     // console.log(text);
                                 }}
                                 keyboardType="numeric"
@@ -101,11 +121,11 @@ export default function SignIn({ navigation }) {
                         )}
 
 
-                    <Button text={step == 3 ? "Cadestre-se no Choppyfy" : "Próximo"} onPress={() => {
+                    <Button text={step == 3 ? "Cadestre-se no Choppyfy" : "Próximo"} loading={props.loading} onPress={() => {
                         submit()
                     }} />
 
-                    <Link text="Ja possuo uma conta" onPress={() => { navigation.navigate("Login") }} stylesText={{ textAlign: "center", marginTop: 20 }} />
+                    <Link text="Ja possuo uma conta" onPress={() => { props.navigation.navigate("Login") }} stylesText={{ textAlign: "center", marginTop: 20 }} />
 
                     <View style={styles.rodape}>
                         <View style={{ flex: 3, height: 1, backgroundColor: "white" }}></View>
@@ -128,7 +148,7 @@ export default function SignIn({ navigation }) {
                             </View>
                         </TouchableOpacity>
                     </View>
-                </View>
+                </Animatable.View>
             </View >
         </TouchableWithoutFeedback>
     );
@@ -157,11 +177,9 @@ const styles = StyleSheet.create({
     },
     text: {
         color: "white",
-        fontSize: scale(30),
         textAlign: "center",
         marginTop: 20,
         marginBottom: 30,
-        fontWeight: "bold",
     },
     subText: {
         color: "white",
@@ -205,3 +223,13 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
 });
+
+const mapStateToProps = state => {
+    return {
+        token: state.authentication.token,
+        loading: state.authentication.loadingCadastro,
+        error: state.authentication.errorCadastro,
+    };
+};
+
+export default connect(mapStateToProps)(SignIn);

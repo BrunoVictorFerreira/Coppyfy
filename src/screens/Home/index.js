@@ -5,8 +5,12 @@ import { LinearGradient } from 'expo-linear-gradient';
 import EmphasisHome from "../../components/EmphasisHome/index"
 import Vitrine from "../../components/Vitrine/index"
 import VitrineNoticies from "../../components/VitrineNoticies/index"
+import { connect } from 'react-redux';
+import { logout } from '../../store/actions/authentication';
 
-export default function Home({ navigation }) {
+const Home = (props, { navigation }) => {
+
+    // props.dispatch(logout())
 
     return (
         <SafeAreaView style={[styles.container, { paddingTop: StatusBar.currentHeight }]}>
@@ -84,3 +88,13 @@ const styles = StyleSheet.create({
         zIndex: 0
     },
 });
+
+const mapStateToProps = state => {
+    return {
+        token: state.authentication.token,
+        loading: state.authentication.loading,
+        error: state.authentication.error,
+    };
+};
+
+export default connect(mapStateToProps)(Home);

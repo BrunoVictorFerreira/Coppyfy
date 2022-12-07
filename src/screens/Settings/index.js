@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react"
-import { StyleSheet, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { StyleSheet, View, Image, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import AppLoading from 'expo-app-loading';
@@ -9,75 +9,115 @@ import Input from "../../components/Input/index"
 import Link from "../../components/Link/index"
 import LinkWithText from "../../components/LinkWithText/index"
 import Button from "../../components/Button/index"
+import { logout, cleanError } from '../../store/actions/authentication';
+import { connect } from "react-redux"
+import Text from "../../components/Text"
+import Ionicons from '@expo/vector-icons/Ionicons';
 
-export default function Settings({ navigation }) {
+const Settings = (props) => {
     const [cpf, setCpf] = useState("")
     const [password, setPassword] = useState("")
 
     const [isSecurityText, setIsSecurityText] = useState(false)
 
-    useEffect(() => {
-console.log("isSecurityText", isSecurityText)
-    }, [isSecurityText])
-
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={styles.container}>
                 <Image source={require("../../../assets/home.jpg")} style={[styles.image]} />
-                <Image source={require("../../../assets/logo.png")} style={styles.logo} />
                 <LinearGradient colors={['transparent', 'rgba(0,0,0,.7)', 'black']} style={styles.degrade} />
-                <Text adjustsFontSizeToFit style={styles.text}>Settings</Text>
-                <View style={styles.inputs}>
-                    <Input
-                        placeholder="CPF"
-                        type="cpf"
-                        value={cpf}
-                        onChange={(text, un) => {
-                            setCpf(un);
-                            // console.log(text);
-                        }}
-                        keyboardType="numeric"
-                    />
-                    <Input
-                        placeholder="Senha"
-                        onChange={(text) => {
-                            setPassword(text);
-                            // console.log(un);
-                        }}
-                        isSecurityText={isSecurityText}
-                        value={password}
-                        icon={!isSecurityText ? "md-eye-outline" : "md-eye-off-outline"}
-                        iconColor="white"
-                        iconAction={() => {
-                            setIsSecurityText(!isSecurityText)
-                        }}
-                    />
-                    <Link text="Esqueceu a senha ?" styles={{marginTop: 20}}/>
-                    <Button text="Entrar" />
-                    <LinkWithText text="Não tem conta ?" textLink="Cadastre-se" onPress={() => {
-                        navigation.navigate("SignIn")
-                    }} stylesContainer={{marginTop: 20}}/>
-                    <View style={styles.rodape}>
-                        <View style={{ flex: 1, height: 1, backgroundColor: "white" }}></View>
-                        <View
-                            style={{ flex: 1, alignItems: "center" }}
-                        >
-                            <Text style={{ color: "white", fontSize: scale(14) }}>ou entre com</Text>
+                <View style={[styles.inputs, { marginTop: 20, flexDirection: "row", alignItems: "center", marginHorizontal: 20, flex: 1, justifyContent: "space-between" }]}>
+                    <View style={{ flexDirection: "row" }}>
+                        <View style={{ width: 60, height: 60 }}>
+                        <Image source={{uri: props?.user?.photo}} style={{resizeMode: "conntain", width: "100%", height: "100%", borderRadius: 30}}/>
                         </View>
-                        <View style={{ flex: 1, height: 1, backgroundColor: "white" }}></View>
+                        <View style={{ marginLeft: 10, flexDirection: "column", justifyContent: "center" }}>
+                            <Text>Bem Vindo,</Text>
+                            <Text weight="bold">{props.user.name}</Text>
+                        </View>
                     </View>
-                    <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
-                        <TouchableOpacity style={{ flex: 1, alignItems: "center" }}>
-                            <View style={{ backgroundColor: "white", alignItems: "center", height: 50, width: 50, justifyContent: "center", borderRadius: 100 }}>
-                                <Image source={require("../../../assets/google.png")} style={{ resizeMode: "cover", height: 30, width: 30, borderRadius: 100 }} />
-                            </View>
+                    <View>
+                        <TouchableOpacity 
+                        onPress={() => { props.dispatch(logout(props.token)) }}
+                        style={{alignItems: "center"}}>
+                            <Ionicons
+                                name={"ios-log-out-outline"}
+                                size={20}
+                                color={"white"}
+                            />
+                            <Text weight="bold">Logout</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ flex: 1, alignItems: "center" }}>
-                            <View style={{ backgroundColor: "#3b579d", height: 50, width: 50, justifyContent: "center", alignItems: "center", borderRadius: 100 }}>
-                                <Image source={require("../../../assets/facebook.png")} style={{ resizeMode: "cover", height: 30, width: 30, borderRadius: 100 }} />
-                            </View>
-                        </TouchableOpacity>
+                        {/* <Button text="Logout" style={{ flex: 1 }}  /> */}
                     </View>
+                </View>
+                <View style={[styles.inputs, { flex: 3 }]}>
+                    <TouchableOpacity style={styles.box}>
+                        <View style={{ flexDirection: "row", alignItems: "center" }}>
+                            <Ionicons
+                                name={"ios-person"}
+                                size={20}
+                                color={"white"}
+                            />
+                            <Text size={14} style={{ marginLeft: 10 }}>Meu Perfil</Text>
+                        </View>
+                        <View>
+                            <Ionicons
+                                name={"chevron-forward"}
+                                size={20}
+                                color={"white"}
+                            />
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.box}>
+                        <View style={{ flexDirection: "row", alignItems: "center" }}>
+                            <Ionicons
+                                name={"ios-star"}
+                                size={20}
+                                color={"white"}
+                            />
+                            <Text size={14} style={{ marginLeft: 10 }}>Time Favorito</Text>
+                        </View>
+                        <View>
+                            <Ionicons
+                                name={"chevron-forward"}
+                                size={20}
+                                color={"white"}
+                            />
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.box}>
+                        <View style={{ flexDirection: "row", alignItems: "center" }}>
+                            <Ionicons
+                                name={"ios-settings"}
+                                size={20}
+                                color={"white"}
+                            />
+                            <Text size={14} style={{ marginLeft: 10 }}>Preferências</Text>
+                        </View>
+                        <View>
+                            <Ionicons
+                                name={"chevron-forward"}
+                                size={20}
+                                color={"white"}
+                            />
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.box}>
+                        <View style={{ flexDirection: "row", alignItems: "center" }}>
+                            <Ionicons
+                                name={"ios-help"}
+                                size={20}
+                                color={"white"}
+                            />
+                            <Text size={14} style={{ marginLeft: 10 }}>Ajuda</Text>
+                        </View>
+                        <View>
+                            <Ionicons
+                                name={"chevron-forward"}
+                                size={20}
+                                color={"white"}
+                            />
+                        </View>
+                    </TouchableOpacity>
                 </View>
             </View >
         </TouchableWithoutFeedback>
@@ -91,6 +131,14 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
 
+    },
+    box: {
+        paddingVertical: 20,
+        borderBottomColor: "white",
+        borderBottomWidth: .5,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between"
     },
     image: {
         position: "absolute",
@@ -155,3 +203,12 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
 });
+
+const mapStateToProps = state => {
+    return {
+        token: state.authentication.token,
+        user: state.authentication.user,
+    };
+};
+
+export default connect(mapStateToProps)(Settings);

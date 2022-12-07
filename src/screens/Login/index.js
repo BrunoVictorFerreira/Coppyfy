@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react"
-import { StyleSheet, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { StyleSheet, View, Alert, Image, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import AppLoading from 'expo-app-loading';
@@ -9,34 +9,52 @@ import Input from "../../components/Input/index"
 import Link from "../../components/Link/index"
 import LinkWithText from "../../components/LinkWithText/index"
 import Button from "../../components/Button/index"
+import { connect } from 'react-redux';
+import { logar, logout, cleanError } from '../../store/actions/authentication';
+import validateEmail from "../../utils/validateEmail";
+import * as Animatable from 'react-native-animatable';
+import Text from "../../components/Text/index"
 
-export default function Login({ navigation }) {
-    const [cpf, setCpf] = useState("")
+const Login = (props) => {
+    const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
-    const [isSecurityText, setIsSecurityText] = useState(false)
+    const [isSecurityText, setIsSecurityText] = useState(true)
+    const handleLogin = () => {
+        if( email != "" && password != ""){
+            if(validateEmail(email)){
+                props.dispatch(cleanError())
+                props.dispatch(logar(email, password));
+            }else{
+                Alert.alert("Email inválido");
+
+            }
+        }else{
+            Alert.alert("Preencha todos os campos");
+        }
+    }
 
     useEffect(() => {
-console.log("isSecurityText", isSecurityText)
-    }, [isSecurityText])
+        console.warn("erroreeee", props.error)
+        props.error != null && Alert.alert(props.error)
+    }, [props.error])
 
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={styles.container}>
                 <Image source={require("../../../assets/home.jpg")} style={[styles.image]} />
-                <Image source={require("../../../assets/logo.png")} style={styles.logo} />
+                <Animatable.Image animation="slideInDown" source={require("../../../assets/logo.png")} style={styles.logo} />
                 <LinearGradient colors={['transparent', 'rgba(0,0,0,.7)', 'black']} style={styles.degrade} />
-                <Text adjustsFontSizeToFit style={styles.text}>Login</Text>
-                <View style={styles.inputs}>
+                <Animatable.View  animation="slideInLeft" adjustsFontSizeToFit style={styles.text}><Text size={25} weight="bold">Login</Text></Animatable.View>
+                <Animatable.View animation="fadeIn" style={styles.inputs}>
                     <Input
-                        placeholder="CPF"
-                        type="cpf"
-                        value={cpf}
+                        placeholder="Email"
+                        value={email}
                         onChange={(text, un) => {
-                            setCpf(un);
+                            setEmail(un);
                             // console.log(text);
                         }}
-                        keyboardType="numeric"
+                        keyboardType="email-address"
                     />
                     <Input
                         placeholder="Senha"
@@ -52,11 +70,13 @@ console.log("isSecurityText", isSecurityText)
                             setIsSecurityText(!isSecurityText)
                         }}
                     />
-                    <Link text="Esqueceu a senha ?" styles={{marginTop: 20}}/>
-                    <Button text="Entrar" />
+                    <Link text="Esqueceu a senha ?" styles={{ marginTop: 20 }} onPress={() => {props.navigation.navigate("ForgotPassword")}}/>
+                    <Button text="Entrar" loading={props.loading} onPress={() => {
+                        handleLogin()
+                    }} />
                     <LinkWithText text="Não tem conta ?" textLink="Cadastre-se" onPress={() => {
-                        navigation.navigate("SignIn")
-                    }} stylesContainer={{marginTop: 20}}/>
+                        props.navigation.navigate("SignIn")
+                    }} stylesContainer={{ marginTop: 20 }} />
                     <View style={styles.rodape}>
                         <View style={{ flex: 1, height: 1, backgroundColor: "white" }}></View>
                         <View
@@ -78,7 +98,7 @@ console.log("isSecurityText", isSecurityText)
                             </View>
                         </TouchableOpacity>
                     </View>
-                </View>
+                </Animatable.View>
             </View >
         </TouchableWithoutFeedback>
     );
@@ -155,3 +175,13 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
 });
+
+const mapStateToProps = state => {
+    return {
+        token: state.authentication.token,
+        loading: state.authentication.loading,
+        error: state.authentication.error,
+    };
+};
+
+export default connect(mapStateToProps)(Login);

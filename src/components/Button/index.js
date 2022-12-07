@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react"
-import { StyleSheet, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, Keyboard, ActivityIndicator } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import AppLoading from 'expo-app-loading';
@@ -9,10 +9,15 @@ import Input from "../../components/Input/index"
 import Link from "../../components/Link/index"
 
 
-export default function Button({ text = "", onPress = null, stylesButton = {}, stylesText = {} }) {
+export default function Button({ text = "", onPress = null, stylesButton = {}, stylesText = {}, loading = false }) {
     return (
-        <TouchableOpacity onPress={onPress} style={[styles.button, {...stylesButton}]}>
-            <Text style={[styles.text, {...stylesText}]}>{text}</Text>
+        <TouchableOpacity onPress={onPress} style={[styles.button, { ...stylesButton }]}>
+            {
+                !loading ?
+                    <Text style={[styles.text, { ...stylesText }]}>{text}</Text>
+                    :
+                    <ActivityIndicator size={20} color="black" />
+            }
         </TouchableOpacity>
     )
 }
@@ -29,7 +34,7 @@ const styles = StyleSheet.create({
         // borderColor: "white"
     },
     text: {
-        color: "#0d182f", 
+        color: "#0d182f",
         fontWeight: "bold",
         fontSize: scale(14)
     }

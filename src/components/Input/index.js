@@ -6,7 +6,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 
 import { TextInputMask } from 'react-native-masked-text'
 
-export default function Input({ type = "custom", placeholder = "", mask = "********************", value = "", isSecurityText = false, keyboardType = "", icon = "", iconColor = "", iconAction = null, onChange = "", ref, autoFocus = false }) {
+export default function Input({ type = "custom", placeholder = "", mask = "**********************************************************************", value = "", isSecurityText = false, keyboardType = "", icon = "", iconColor = "", iconAction = null, onChange = "", ref, autoFocus = false }) {
 
     const [borderBottom, setBorderBottom] = useState(1)
 
@@ -14,6 +14,7 @@ export default function Input({ type = "custom", placeholder = "", mask = "*****
         <View style={[styles.container, { borderBottomWidth: borderBottom }]}>
             <TextInputMask
             ref={as => {ref = as}}
+            autoCapitalize={false}
             autoFocus={autoFocus}
                 type={type}
                 options={
