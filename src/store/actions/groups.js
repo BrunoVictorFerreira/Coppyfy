@@ -39,7 +39,9 @@ export const teamsForGroup = (group_id, token) => {
                     informations{
                         pts
                         vit
+                        emp
                         der
+                        gols
                         sg
                     }
                     

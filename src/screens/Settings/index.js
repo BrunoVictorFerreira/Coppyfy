@@ -23,10 +23,10 @@ const Settings = (props) => {
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={styles.container}>
-                <Image source={require("../../../assets/home.jpg")} style={[styles.image]} />
+                {/* <Image source={require("../../../assets/home.jpg")} style={[styles.image]} /> */}
                 <LinearGradient colors={['transparent', 'rgba(0,0,0,.7)', 'black']} style={styles.degrade} />
                 <View style={[styles.inputs, { marginTop: 20, flexDirection: "row", alignItems: "center", marginHorizontal: 20, flex: 1, justifyContent: "space-between" }]}>
-                    <View style={{ flexDirection: "row" }}>
+                    <View style={{ flex: 1, flexDirection: "row" }}>
                         <View style={{ width: 60, height: 60 }}>
                         <Image source={{uri: props?.user?.photo}} style={{resizeMode: "conntain", width: "100%", height: "100%", borderRadius: 30}}/>
                         </View>
@@ -53,11 +53,11 @@ const Settings = (props) => {
                     <TouchableOpacity style={styles.box}>
                         <View style={{ flexDirection: "row", alignItems: "center" }}>
                             <Ionicons
-                                name={"ios-person"}
+                                name={"ios-person-outline"}
                                 size={20}
                                 color={"white"}
                             />
-                            <Text size={14} style={{ marginLeft: 10 }}>Meu Perfil</Text>
+                            <Text size={14} weight="bold" style={{ marginLeft: 10 }}>Meu Perfil</Text>
                         </View>
                         <View>
                             <Ionicons
@@ -70,11 +70,11 @@ const Settings = (props) => {
                     <TouchableOpacity style={styles.box}>
                         <View style={{ flexDirection: "row", alignItems: "center" }}>
                             <Ionicons
-                                name={"ios-star"}
+                                name={"ios-star-outline"}
                                 size={20}
                                 color={"white"}
                             />
-                            <Text size={14} style={{ marginLeft: 10 }}>Time Favorito</Text>
+                            <Text size={14} weight="bold" style={{ marginLeft: 10 }}>Time Favorito</Text>
                         </View>
                         <View>
                             <Ionicons
@@ -87,11 +87,11 @@ const Settings = (props) => {
                     <TouchableOpacity style={styles.box}>
                         <View style={{ flexDirection: "row", alignItems: "center" }}>
                             <Ionicons
-                                name={"ios-settings"}
+                                name={"ios-settings-outline"}
                                 size={20}
                                 color={"white"}
                             />
-                            <Text size={14} style={{ marginLeft: 10 }}>Preferências</Text>
+                            <Text size={14} weight="bold" style={{ marginLeft: 10 }}>Preferências</Text>
                         </View>
                         <View>
                             <Ionicons
@@ -104,11 +104,11 @@ const Settings = (props) => {
                     <TouchableOpacity style={styles.box}>
                         <View style={{ flexDirection: "row", alignItems: "center" }}>
                             <Ionicons
-                                name={"ios-help"}
+                                name={"ios-help-outline"}
                                 size={20}
                                 color={"white"}
                             />
-                            <Text size={14} style={{ marginLeft: 10 }}>Ajuda</Text>
+                            <Text size={14} weight="bold" style={{ marginLeft: 10 }}>Ajuda</Text>
                         </View>
                         <View>
                             <Ionicons
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-
+        backgroundColor: "#111111"
     },
     box: {
         paddingVertical: 20,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { StyleSheet, Image, StatusBar, ScrollView, Keyboard, TouchableWithoutFeedback, View } from 'react-native';
+import { StyleSheet, Image, StatusBar, ScrollView, Keyboard, TouchableWithoutFeedback, TouchableOpacity, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Text from "../../components/Text"
 
@@ -9,11 +9,14 @@ import { connect } from "react-redux";
 import { groups, teamsForGroup } from '../../store/actions/groups';
 import Button from "../../components/Button/index"
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import Input from "../../components/Input/index"
 
 const Profile = (props) => {
 
-    const [cpf, setCpf] = useState("")
-    const [password, setPassword] = useState("")
+    const [name, setName] = useState(props.user.name)
+    const [email, setEmail] = useState(props.user.email)
+    const [phone, setPhone] = useState("")
 
     const [isSecurityText, setIsSecurityText] = useState(false)
 
@@ -22,14 +25,60 @@ const Profile = (props) => {
 
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={styles.container}>
-                <Image source={require("../../../assets/home.jpg")} style={[styles.image]} />
-                <Image source={require("../../../assets/logo.png")} style={styles.logo} />
+                {/* <Image source={require("../../../assets/home.jpg")} style={[styles.image]} /> */}
                 <LinearGradient colors={['transparent', 'rgba(0,0,0,.7)', 'black']} style={styles.degrade} />
-                <Text adjustsFontSizeToFit style={styles.text}>Meu Perfil</Text>
-                <View style={styles.inputs}>
-
-                    <Button text="Logout" onPress={() => { props.dispatch(logout(props.token)) }} />
-
+                <Text size={16} height="medium" style={{ marginTop: 20 }}>Meu Perfil</Text>
+                <View style={[styles.inputs, { marginTop: 20, flexDirection: "row", alignItems: "center", marginHorizontal: 20, flex: 1, justifyContent: "center" }]}>
+                    <View style={{ flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                        <TouchableOpacity style={{ width: 100, height: 100 }}>
+                            <View style={{position: "absolute", zIndex: 1, right: -10, top: -5, alignItems: "center", justifyContent: "center",borderRadius: 20, padding: 5, backgroundColor: "orange", height: 20, width: 20}}>
+                                <Ionicons name="md-pencil" color="white" size={10} />
+                            </View>
+                            <Image source={{ uri: props?.user?.photo }} style={{ resizeMode: "conntain", width: "100%", height: "100%", borderRadius: 20 }} />
+                        </TouchableOpacity>
+                        <View style={{ flexDirection: "column", justifyContent: "center" }}>
+                            <Text weight="bold" style={{ marginTop: 10 }}>{props.user.name}</Text>
+                        </View>
+                    </View>
+                </View>
+                <View style={[styles.inputs, { flex: 3 }]}>
+                    <Input
+                        label="Nome"
+                        placeholder=""
+                        value={name}
+                        onChange={(text, un) => {
+                            setName(un);
+                            // console.log(text);
+                        }}
+                        keyboardType="email-address"
+                        leftIcon={"person-outline"}
+                        leftIconColor="white"
+                    />
+                    <Input
+                        label="Email"
+                        placeholder=""
+                        value={email}
+                        onChange={(text, un) => {
+                            setEmail(un);
+                            // console.log(text);
+                        }}
+                        keyboardType="email-address"
+                        leftIcon={"mail-open-outline"}
+                        leftIconColor="white"
+                    />
+                    <Input
+                        label="Número"
+                        placeholder=""
+                        value={phone}
+                        onChange={(text, un) => {
+                            setPhone(un);
+                            // console.log(text);
+                        }}
+                        keyboardType="email-address"
+                        leftIcon={"ios-call-outline"}
+                        leftIconColor="white"
+                    />
+                    <Button text="salvar"/>
                 </View>
             </View >
         </TouchableWithoutFeedback>
@@ -43,7 +92,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-
+        backgroundColor: "#111111"
     },
     image: {
         position: "absolute",
@@ -83,6 +132,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         width: "100%",
         paddingHorizontal: 40,
+        paddingVertical: 20
     },
     button: {
         backgroundColor: "white",
@@ -112,7 +162,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         token: state.authentication.token,
-        groups: state.groups.groups
+        groups: state.groups.groups,
+        user: state.authentication.user
     };
 };
 

@@ -60,7 +60,9 @@ const Box = ({ teams_for_groups, dispatch, token, title, options }) => {
                                 <DataTable.Title style={{ flex: 3 }}><Text size={12}>Equipe</Text></DataTable.Title>
                                 <DataTable.Title numeric style={{ flex: 1 }}><Text size={12}>Pts</Text></DataTable.Title>
                                 <DataTable.Title numeric style={{ flex: 1 }}><Text size={12}>VIT</Text></DataTable.Title>
+                                <DataTable.Title numeric style={{ flex: 1 }}><Text size={12}>EMP</Text></DataTable.Title>
                                 <DataTable.Title numeric style={{ flex: 1 }}><Text size={12}>DER</Text></DataTable.Title>
+                                <DataTable.Title numeric style={{ flex: 1 }}><Text size={12}>GOLS</Text></DataTable.Title>
                                 <DataTable.Title numeric style={{ flex: 1 }}><Text size={12}>SG</Text></DataTable.Title>
                             </DataTable.Header>
                             {
@@ -74,7 +76,9 @@ const Box = ({ teams_for_groups, dispatch, token, title, options }) => {
                                     </DataTable.Cell>
                                     <DataTable.Cell numeric style={{ flex: 1 }}><Text size={12}>{item?.informations[0]?.pts}</Text></DataTable.Cell>
                                     <DataTable.Cell numeric style={{ flex: 1 }}><Text size={12}>{item?.informations[0]?.vit}</Text></DataTable.Cell>
+                                    <DataTable.Cell numeric style={{ flex: 1 }}><Text size={12}>{item?.informations[0]?.emp}</Text></DataTable.Cell>
                                     <DataTable.Cell numeric style={{ flex: 1 }}><Text size={12}>{item?.informations[0]?.der}</Text></DataTable.Cell>
+                                    <DataTable.Cell numeric style={{ flex: 1 }}><Text size={12}>{item?.informations[0]?.gols}</Text></DataTable.Cell>
                                     <DataTable.Cell numeric style={{ flex: 1 }}><Text size={12}>{item?.informations[0]?.sg}</Text></DataTable.Cell>
                                 </DataTable.Row>)
                             }

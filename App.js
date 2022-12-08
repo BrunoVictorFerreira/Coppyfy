@@ -54,11 +54,12 @@ const Root = (props) => {
     return (
       <View style={{ alignSelf: "center", flexDirection: "row", height: "100%", width: Dimensions.get('window').width, justifyContent: "space-around" }}>
         {
-          screen.screen != "Início" ?
+          screen.screen == "Início" ?
 
-            <Text weight="bold" style={{ flex: 1, left: 10, color: "white", fontSize: 16, marginTop: 5 }}>{screen.screen}</Text>
+          <Text weight="bold" style={{ flex: 1, left: 10, color: "white", fontSize: 16, marginTop: 5 }}>Olá, {props.user.name?.split(" ")[0]}</Text>
+            // <Text weight="bold" style={{ flex: 1, left: 10, color: "white", fontSize: 16, marginTop: 5 }}>{screen.screen}</Text>
             :
-            <Text weight="bold" style={{ flex: 1, left: 10, color: "white", fontSize: 16, marginTop: 5 }}>Olá, {props.user.name}</Text>
+            <View style={{flex: 1}}/>
         }
 
         <View style={{ flex: 1, alignItems: "center" }}>
@@ -91,10 +92,10 @@ const Root = (props) => {
             let iconName;
 
             if (route.name === 'Início') {
-              iconName = focused ? 'ios-football' : 'ios-football-outline';
-              size = 50
+              iconName = focused ? 'ios-home' : 'ios-home-outline';
+              size = 30
             } else if (route.name === 'Configurações') {
-              iconName = focused ? 'ios-construct' : 'ios-construct-outline';
+              iconName = focused ? 'ios-settings' : 'ios-settings-outline';
             } else if (route.name === 'Meu Time') {
               iconName = focused ? 'ios-star' : 'ios-star-outline';
             } else if (route.name === 'Ranking') {
