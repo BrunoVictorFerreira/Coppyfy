@@ -52,33 +52,42 @@ const Root = (props) => {
 
   const Header = (screen) => {
     return (
-      <View style={{ alignSelf: "center", flexDirection: "row", height: "100%", width: Dimensions.get('window').width, justifyContent: "space-around" }}>
-        {
+      <View style={{ alignSelf: "center", flexDirection: "row", width: Dimensions.get('window').width, justifyContent: "space-between" }}>
+
+        <TouchableOpacity hitslop={{ top: 100, bottom: 100, right: 100, left: 100 }} onPress={() => { }}>
+          <View style={{ left: 20, flexDirection: "row" }}>
+            <Image source={{ uri: props.user.photo }} style={{ resizeMode: "contain", width: 50, height: 50, borderRadius: 25 }} />
+            <View style={{marginLeft: 10, flexDirection: "column", alignItems: "flex-start", justifyContent: "center"}}>
+              <Text color="#606060" weight='bold' size={14}>Olá, {props.user.name?.split(" ")[0] + " " + props.user.name?.split(" ")[1]}</Text>
+              <Text color="#ac1b3a" weight='medium' size={10}>Bem vindo a Catar 2022</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        {/* {
           screen.screen == "Início" ?
 
           <Text weight="bold" style={{ flex: 1, left: 10, color: "white", fontSize: 16, marginTop: 5 }}>Olá, {props.user.name?.split(" ")[0]}</Text>
             // <Text weight="bold" style={{ flex: 1, left: 10, color: "white", fontSize: 16, marginTop: 5 }}>{screen.screen}</Text>
             :
             <View style={{flex: 1}}/>
-        }
+        } */}
 
-        <View style={{ flex: 1, alignItems: "center" }}>
+        {/* <View style={{ flex: 1, alignItems: "center" }}>
           <Image source={require("./assets/logo.png")} style={{ resizeMode: "contain", width: 35, height: 35 }} />
-        </View>
+        </View> */}
         <View style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "flex-end" }}>
           <TouchableOpacity hitslop={{ top: 100, bottom: 100, right: 100, left: 100 }} onPress={() => { }}>
+              <View style={{position: "absolute", backgroundColor: "green", width: 10, height: 10, left: 10, borderRadius: 5, zIndex:2}}>
+
+              </View>
               <Ionicons
-                name={'ios-notifications'}
+                name={'ios-notifications-outline'}
                 size={20}
-                color={'white'}
+                color={'#ac1b3a'}
                 style={{marginRight: 50}}
               />
           </TouchableOpacity>
-          <TouchableOpacity hitslop={{ top: 100, bottom: 100, right: 100, left: 100 }} onPress={() => { }}>
-            <View style={{ right: 20, width: 35, height: 35 }}>
-              <Image source={{ uri: props.user.photo }} style={{ resizeMode: "contain", width: "100%", height: "100%", borderRadius: 20 }} />
-            </View>
-          </TouchableOpacity>
+          
         </View>
       </View >
     )
@@ -112,41 +121,33 @@ const Root = (props) => {
               size={size}
               color={color}
               style={{
-                marginTop: route.name == 'Início' ? -30 : 0,
+                marginTop: 0,
               }} />
-              <Text size={10} weight="medium">{route.name}</Text>
+              {/* <Text size={10} weight="medium" color={focused ? "" : }>{route.name}</Text> */}
             </>;
           },
 
           tabBarShowLabel: false,
-          tabBarActiveTintColor: 'white',
-          tabBarInactiveTintColor: 'lightgray',
+          tabBarActiveTintColor: '#880218',
+          tabBarInactiveTintColor: '#606060',
           headerStyle: {
-            backgroundColor: "#111111",
+            backgroundColor: "#fafafa",
+            height: 80
           },
-          tabBarInactiveBackgroundColor: "#111111",
-          tabBarActiveBackgroundColor: "#111111",
+          tabBarInactiveBackgroundColor: "#fdfdfd",
+          tabBarActiveBackgroundColor: "#fdfdfd",
           tabBarStyle: {
-            borderTopColor: "#111111",
-            backgroundColor: "#111111",
+            borderTopColor: "#fdfdfd",
+            backgroundColor: "#fdfdfd",
             height: 60,
             paddingBottom: 10,
             paddingTop: 10,
+            shadowColor: 'rgba(0,0,0,.5)',
+            shadowOffset: { width: -2, height: 4 },
+            shadowOpacity: 0.9,
+            shadowRadius: 15,
           },
-          tabBarBackground: () => (
-            <LinearGradient colors={['transparent', '#111112', '#111111']}
-              style={{
-                position: "absolute", backgroundColor: "#111111", backgroundColor: "#111111",
-                borderTopColor: "#111111",
-                height: 80,
-                width: "20%",
-                bottom: 10,
-                alignSelf: "center",
-                borderRadius: 100
-              }}>
 
-            </LinearGradient>
-          ),
           tabBarHideOnKeyboard: true,
           headerTitle: () => <Header screen={route.name} />,
         })}

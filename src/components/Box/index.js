@@ -22,12 +22,12 @@ const Box = ({ teams_for_groups, dispatch, token, title, options }) => {
     }
 
     return (
-        <View style={{ justifyContent: "center" }}>
+        <View style={{ flex: 2 }}>
 
 
-            <View style={{ backgroundColor: "#323234", padding: 20, borderRadius: 20 }}>
+            <View style={{ backgroundColor: "#ac1b3a", padding: 20, borderRadius: 20 }}>
                 <Text
-                    style={[styles.text, { textAlign: "left", marginTop: 0, marginBottom: 20 }]}
+                    style={[styles.text, { textAlign: "left", marginTop: 0 }]}
                     size={18}
                     weight="bold"
                 >{groupName}</Text>
@@ -51,7 +51,7 @@ const Box = ({ teams_for_groups, dispatch, token, title, options }) => {
                         )
                     }
                 </IfComponent>
-                <IfComponent hidden={openState == false}>
+                {/* <IfComponent hidden={openState == false}>
 
                     <View style={{ alignItems: "center" }}>
 
@@ -100,7 +100,7 @@ const Box = ({ teams_for_groups, dispatch, token, title, options }) => {
                         }} />
 
                     </View>
-                </IfComponent>
+                </IfComponent> */}
             </View>
         </View>
     )
@@ -115,10 +115,8 @@ const styles = StyleSheet.create({
         borderRadius: 10
     },
     text: {
-        color: "white",
+        color: "red",
         textAlign: "center",
-        marginTop: 20,
-        marginBottom: 30,
     },
 });
 

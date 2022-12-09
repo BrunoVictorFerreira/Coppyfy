@@ -26,7 +26,7 @@ const Profile = (props) => {
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={styles.container}>
                 {/* <Image source={require("../../../assets/home.jpg")} style={[styles.image]} /> */}
-                <LinearGradient colors={['transparent', 'rgba(0,0,0,.7)', 'black']} style={styles.degrade} />
+                {/* <LinearGradient colors={['transparent', 'rgba(0,0,0,.7)', 'black']} style={styles.degrade} /> */}
                 <Text size={16} height="medium" style={{ marginTop: 20 }}>Meu Perfil</Text>
                 <View style={[styles.inputs, { marginTop: 20, flexDirection: "row", alignItems: "center", marginHorizontal: 20, flex: 1, justifyContent: "center" }]}>
                     <View style={{ flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#111111"
+        backgroundColor: "#fafafa"
     },
     image: {
         position: "absolute",

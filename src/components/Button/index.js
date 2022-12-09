@@ -9,12 +9,12 @@ import Input from "../../components/Input/index"
 import Link from "../../components/Link/index"
 
 
-export default function Button({ text = "", onPress = null, stylesButton = {}, stylesText = {}, loading = false }) {
+export default function Button({ text = "", onPress = null, stylesButton = {}, stylesText = {}, loading = false, out=false }) {
     return (
-        <TouchableOpacity onPress={onPress} style={[styles.button, { ...stylesButton }]}>
+        <TouchableOpacity onPress={onPress} style={[styles.button, { ...stylesButton, backgroundColor: out ? "white" : "#880218" }]}>
             {
                 !loading ?
-                    <Text style={[styles.text, { ...stylesText }]}>{text}</Text>
+                    <Text style={[styles.text, { ...stylesText, color: out ? "#111111" : "white" }]}>{text}</Text>
                     :
                     <ActivityIndicator size={20} color="black" />
             }
@@ -24,7 +24,6 @@ export default function Button({ text = "", onPress = null, stylesButton = {}, s
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: "white",
         alignItems: "center",
         justifyContent: "center",
         borderRadius: 20,
@@ -34,7 +33,6 @@ const styles = StyleSheet.create({
         // borderColor: "white"
     },
     text: {
-        color: "#0d182f",
         fontWeight: "bold",
         fontSize: scale(14)
     }

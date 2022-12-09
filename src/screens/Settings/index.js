@@ -24,7 +24,7 @@ const Settings = (props) => {
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={styles.container}>
                 {/* <Image source={require("../../../assets/home.jpg")} style={[styles.image]} /> */}
-                <LinearGradient colors={['transparent', 'rgba(0,0,0,.7)', 'black']} style={styles.degrade} />
+                <LinearGradient colors={['transparent', 'rgba(154,16,49,.4)', '#9a1031']} style={styles.degrade} />
                 <View style={[styles.inputs, { marginTop: 20, flexDirection: "row", alignItems: "center", marginHorizontal: 20, flex: 1, justifyContent: "space-between" }]}>
                     <View style={{ flex: 1, flexDirection: "row" }}>
                         <View style={{ width: 60, height: 60 }}>
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#111111"
+        backgroundColor: "#fafafa"
     },
     box: {
         paddingVertical: 20,

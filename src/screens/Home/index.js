@@ -14,16 +14,23 @@ const Home = (props, { navigation }) => {
 
     return (
         <SafeAreaView style={[styles.container, { paddingTop: StatusBar.currentHeight }]}>
-            <Image source={require("../../../assets/selecoes/alemanha.jpg")} style={[styles.image]} />
-            <LinearGradient colors={['transparent', '#111112', '#111111']} style={styles.degrade} />
+            {/* <Image source={require("../../../assets/selecoes/alemanha.jpg")} style={[styles.image]} /> */}
+            {/* <LinearGradient colors={['transparent', '#111112', '#111111']} style={styles.degrade} /> */}
             <ScrollView contentContainerStyle={{ paddingHorizontal: 20, paddingTop: 40, paddingBottom: 60 }}>
-                <EmphasisHome
+                {/* <EmphasisHome
                     options={{
                         firstBrasao: require("../../../assets/brasoes/alemanha.png"),
                         secondBrasao: require("../../../assets/brasoes/costa.png"),
                     }}
-                />
-
+                /> */}
+                <VitrineNoticies options={[
+                    {
+                        img: require("../../../assets/notice1.jpg"),
+                    },
+                    // {
+                    //     img: require("../../../assets/notice2.jpg"),
+                    // }
+                ]} />
                 <Vitrine options={[
                     {
                         gradient: ['#0c1a75', '#2946d8'],
@@ -49,14 +56,7 @@ const Home = (props, { navigation }) => {
                 ]} />
 
 
-                <VitrineNoticies options={[
-                    {
-                        img: require("../../../assets/notice1.jpg"),
-                    },
-                    {
-                        img: require("../../../assets/notice2.jpg"),
-                    }
-                ]} />
+
             </ScrollView>
 
         </SafeAreaView>
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "rgba(0,0,0,.1)"
+        backgroundColor: "#fafafa"
     },
     image: {
         position: "absolute",

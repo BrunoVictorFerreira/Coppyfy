@@ -53,8 +53,16 @@ const SignIn = (props) => {
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={styles.container}>
-                <Image source={require("../../../assets/home.jpg")} style={[styles.image]} />
-                <Animatable.Image animation="slideInDown" source={require("../../../assets/logo.png")} style={styles.logo} />
+                <Image source={require("../../../assets/home2.jpeg")} style={[styles.image]} />
+                <Animatable.View animation="slideInDown" style={{
+                    shadowColor: 'black',
+                    shadowOffset: {width: -2, height: 4},
+                    shadowOpacity: 0.6,
+                    shadowRadius: 10,
+                    marginTop: 50, backgroundColor: "white", height: 70, width: 70, padding: 10, borderRadius: 60}}>
+
+                <Image source={require("../../../assets/logo.png")} style={styles.logo} />
+                </Animatable.View>
                 <LinearGradient colors={['transparent', 'rgba(0,0,0,.7)', 'black']} style={styles.degrade} />
                 <Animatable.View animation="slideInRight"><Text size={25} weight="bold" adjustsFontSizeToFit style={styles.text}>Cadastro</Text></Animatable.View>
                 <Animatable.View animation="fadeIn" style={styles.inputs}>
@@ -170,10 +178,9 @@ const styles = StyleSheet.create({
     },
     logo: {
         resizeMode: "contain",
-        width: scale(70),
-        height: scale(70),
+        width: scale(40),
+        height: scale(40),
         alignSelf: "center",
-        marginTop: 50
     },
     text: {
         color: "white",

@@ -7,7 +7,7 @@ import Text from "../../components/Text/index"
 
 import { TextInputMask } from 'react-native-masked-text'
 
-export default function Input({ label = "", type = "custom", placeholder = "", mask = "**********************************************************************", value = "", isSecurityText = false, keyboardType = "", icon = "", iconColor = "", iconAction = null, leftIcon = "", leftIconColor = "", leftIconAction = null, onChange = "", ref, autoFocus = false }) {
+export default function Input({ label = "", type = "custom", placeholder = "", mask = "**********************************************************************", value = "", isSecurityText = false, keyboardType = "", icon = "", iconColor = "", iconAction = null, leftIcon = "", leftIconColor = "", leftIconAction = null, onChange = "", ref, autoFocus = false, out=false }) {
 
     const [borderBottom, setBorderBottom] = useState(1)
 
@@ -16,7 +16,7 @@ export default function Input({ label = "", type = "custom", placeholder = "", m
             {
                 label != "" && <Text>{label}</Text>
             }
-            <View style={[styles.container, { borderBottomWidth: borderBottom }]}>
+            <View style={[styles.container, { borderBottomWidth: borderBottom, borderBottomColor: out ? "white" : '#880218' }]}>
                 {
                     leftIcon != "" &&
                         (
@@ -79,7 +79,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         borderBottomWidth: 0.1,
         alignItems: "center",
-        borderBottomColor: "white",
         marginBottom: moderateScale(20)
     },
     input: {
