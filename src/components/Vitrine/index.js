@@ -15,7 +15,9 @@ export default function Vitrine({ options }) {
             {/* <View style={{ backgroundColor: "#323234", padding: 20, borderRadius: 20 }}> */}
             {
                 options.map((item, key) =>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => {
+                        setSelect(key)
+                    }}>
                         <View style={{
                             shadowColor: key == select ? 'rgba(0,0,0,.3)' : 'transparent',
                             shadowOffset: { width: -2, height: 10 },
@@ -23,7 +25,7 @@ export default function Vitrine({ options }) {
                             shadowRadius: 10,
                             marginBottom: 20,
                             borderRadius: 15,
-                            borderWidth: .2,
+                            borderWidth: .4,
                             borderColor: key == select ? "#880218" : 'transparent',
                             height: 70,
                             flexDirection: "row",

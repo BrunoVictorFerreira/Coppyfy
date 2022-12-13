@@ -6,181 +6,38 @@ import IfComponent from "../../components/IfComponent/index"
 import Box from "../../components/Box/index"
 import Text from "../../components/Text/index"
 import { connect } from "react-redux";
-import { groups, teamsForGroup } from '../../store/actions/groups';
+import { groups, matchs, allTeamsForGroup } from '../../store/actions/groups';
 import { scale } from 'react-native-size-matters';
+import Carousel from "../../components/Carousel/index"
 
 const Ranking = (props) => {
 
-    const [open, setOpen] = useState(false)
+    const [indexState, setIndexState] = useState(0)
+    const [matchsState, setMatchsState] = useState(null)
 
     useEffect(() => {
-        props.dispatch(groups(props.token))
+        props.dispatch(allTeamsForGroup(props.token))
+        props.dispatch(matchs(props.token));
     }, [])
-
     useEffect(() => {
-        console.log("groups", props.groups)
-    }, [props.groups])
+        setMatchsState(props.matchs?.filter(item => item.first_team_description[0].group_id == (indexState + 1)))
+    }, [indexState])
+
+
 
     return (
-        <SafeAreaView style={[styles.container, { paddingTop: StatusBar.currentHeight }]}>
-            <ScrollView contentContainerStyle={{ flex: 1, flexDirection: "column" }}>
+        <SafeAreaView style={[styles.container]}>
+            <ScrollView>
                 <View style={{ 
                     flex: 1, 
                     backgroundColor: "#ac1b3a", padding: 20, flexDirection: "row" }}>
-                    <View style={{ flex: 1, 
-                        shadowColor: 'rgba(0,0,0,.3)',
-                        shadowOffset: { width: -2, height: 10 },
-                        shadowOpacity: 0.9,
-                        shadowRadius: 10,
-                        backgroundColor: "#f0ece9", borderRadius: 30, flexDirection: "column", marginRight: 20 }}>
-                        <View style={{ flex: 2, borderBottomColor: "lightgray", borderBottomWidth: 1, alignItems: "center", justifyContent: "center" }}>
-                            <Text color="gray" weight="bold" size={18}>Grupo A</Text>
-                        </View>
-                        <View style={{ flex: 10, paddingVertical: 5, paddingHorizontal: 10 }}>
-                            <View style={{
-                                borderRadius: 15,
-                                flex: 1,
-                                flexDirection: "row",
-                               
-                            }} >
-                                <View style={{ flexDirection: "row", padding: 10, alignItems: "center" }}>
-                                    <View style={{ backgroundColor: "#ac1b3a", borderRadius: 20, width: 22, height: 22, justifyContent: "center", alignItems: "center" }}>
-                                        <View style={{ backgroundColor: "white", borderRadius: 20, width: 21, height: 21, justifyContent: "center" }}>
-                                            <Image source={require("../../../assets/brasoes/brasil.png")} style={[styles.logo, { borderRadius: 100, height: 20, width: 20 }]} />
-                                        </View>
-                                    </View>
-                                    <Text size={14} weight="bold" color="#ac1b3a" style={{ marginLeft: 10 }}>Brasil</Text>
-                                </View>
-                            </View>
-                            <View style={{
-                                borderRadius: 15,
-                                flex: 1,
-                                flexDirection: "row",
-                               
-                            }} >
-                                <View style={{ flexDirection: "row", padding: 10, alignItems: "center" }}>
-                                    <View style={{ backgroundColor: "#ac1b3a", borderRadius: 20, width: 22, height: 22, justifyContent: "center", alignItems: "center" }}>
-                                        <View style={{ backgroundColor: "white", borderRadius: 20, width: 21, height: 21, justifyContent: "center" }}>
-                                            <Image source={require("../../../assets/brasoes/brasil.png")} style={[styles.logo, { borderRadius: 100, height: 20, width: 20 }]} />
-                                        </View>
-                                    </View>
-                                    <Text size={14} weight="bold" color="#ac1b3a" style={{ marginLeft: 10 }}>Brasil</Text>
-                                </View>
-                            </View>
-                            <View style={{
-                                borderRadius: 15,
-                                flex: 1,
-                                flexDirection: "row",
-                               
-                            }} >
-                                <View style={{ flexDirection: "row", padding: 10, alignItems: "center" }}>
-                                    <View style={{ backgroundColor: "#ac1b3a", borderRadius: 20, width: 22, height: 22, justifyContent: "center", alignItems: "center" }}>
-                                        <View style={{ backgroundColor: "white", borderRadius: 20, width: 21, height: 21, justifyContent: "center" }}>
-                                            <Image source={require("../../../assets/brasoes/brasil.png")} style={[styles.logo, { borderRadius: 100, height: 20, width: 20 }]} />
-                                        </View>
-                                    </View>
-                                    <Text size={14} weight="bold" color="#ac1b3a" style={{ marginLeft: 10 }}>Brasil</Text>
-                                </View>
-                            </View>
-                            <View style={{
-                                borderRadius: 15,
-                                flex: 1,
-                                flexDirection: "row",
-                               
-                            }} >
-                                <View style={{ flexDirection: "row", padding: 10, alignItems: "center" }}>
-                                    <View style={{ backgroundColor: "#ac1b3a", borderRadius: 20, width: 22, height: 22, justifyContent: "center", alignItems: "center" }}>
-                                        <View style={{ backgroundColor: "white", borderRadius: 20, width: 21, height: 21, justifyContent: "center" }}>
-                                            <Image source={require("../../../assets/brasoes/brasil.png")} style={[styles.logo, { borderRadius: 100, height: 20, width: 20 }]} />
-                                        </View>
-                                    </View>
-                                    <Text size={14} weight="bold" color="#ac1b3a" style={{ marginLeft: 10 }}>Brasil</Text>
-                                </View>
-                            </View>
-                            
-                           
-                        </View>
-                    </View>
-                    <View style={{ flex: 1, 
-                        shadowColor: 'rgba(0,0,0,.3)',
-                        shadowOffset: { width: -2, height: 10 },
-                        shadowOpacity: 0.9,
-                        shadowRadius: 10,
-                        backgroundColor: "#f0ece9", borderRadius: 30, flexDirection: "column", marginRight: 20 }}>
-                        <View style={{ flex: 2, borderBottomColor: "lightgray", borderBottomWidth: 1, alignItems: "center", justifyContent: "center" }}>
-                            <Text color="gray" weight="bold" size={18}>Grupo A</Text>
-                        </View>
-                        <View style={{ flex: 10, paddingVertical: 5, paddingHorizontal: 10 }}>
-                            <View style={{
-                                borderRadius: 15,
-                                flex: 1,
-                                flexDirection: "row",
-                               
-                            }} >
-                                <View style={{ flexDirection: "row", padding: 10, alignItems: "center" }}>
-                                    <View style={{ backgroundColor: "#ac1b3a", borderRadius: 20, width: 22, height: 22, justifyContent: "center", alignItems: "center" }}>
-                                        <View style={{ backgroundColor: "white", borderRadius: 20, width: 21, height: 21, justifyContent: "center" }}>
-                                            <Image source={require("../../../assets/brasoes/brasil.png")} style={[styles.logo, { borderRadius: 100, height: 20, width: 20 }]} />
-                                        </View>
-                                    </View>
-                                    <Text size={14} weight="bold" color="#ac1b3a" style={{ marginLeft: 10 }}>Brasil</Text>
-                                </View>
-                            </View>
-                            <View style={{
-                                borderRadius: 15,
-                                flex: 1,
-                                flexDirection: "row",
-                               
-                            }} >
-                                <View style={{ flexDirection: "row", padding: 10, alignItems: "center" }}>
-                                    <View style={{ backgroundColor: "#ac1b3a", borderRadius: 20, width: 22, height: 22, justifyContent: "center", alignItems: "center" }}>
-                                        <View style={{ backgroundColor: "white", borderRadius: 20, width: 21, height: 21, justifyContent: "center" }}>
-                                            <Image source={require("../../../assets/brasoes/brasil.png")} style={[styles.logo, { borderRadius: 100, height: 20, width: 20 }]} />
-                                        </View>
-                                    </View>
-                                    <Text size={14} weight="bold" color="#ac1b3a" style={{ marginLeft: 10 }}>Brasil</Text>
-                                </View>
-                            </View>
-                            <View style={{
-                                borderRadius: 15,
-                                flex: 1,
-                                flexDirection: "row",
-                               
-                            }} >
-                                <View style={{ flexDirection: "row", padding: 10, alignItems: "center" }}>
-                                    <View style={{ backgroundColor: "#ac1b3a", borderRadius: 20, width: 22, height: 22, justifyContent: "center", alignItems: "center" }}>
-                                        <View style={{ backgroundColor: "white", borderRadius: 20, width: 21, height: 21, justifyContent: "center" }}>
-                                            <Image source={require("../../../assets/brasoes/brasil.png")} style={[styles.logo, { borderRadius: 100, height: 20, width: 20 }]} />
-                                        </View>
-                                    </View>
-                                    <Text size={14} weight="bold" color="#ac1b3a" style={{ marginLeft: 10 }}>Brasil</Text>
-                                </View>
-                            </View>
-                            <View style={{
-                                borderRadius: 15,
-                                flex: 1,
-                                flexDirection: "row",
-                               
-                            }} >
-                                <View style={{ flexDirection: "row", padding: 10, alignItems: "center" }}>
-                                    <View style={{ backgroundColor: "#ac1b3a", borderRadius: 20, width: 22, height: 22, justifyContent: "center", alignItems: "center" }}>
-                                        <View style={{ backgroundColor: "white", borderRadius: 20, width: 21, height: 21, justifyContent: "center" }}>
-                                            <Image source={require("../../../assets/brasoes/brasil.png")} style={[styles.logo, { borderRadius: 100, height: 20, width: 20 }]} />
-                                        </View>
-                                    </View>
-                                    <Text size={14} weight="bold" color="#ac1b3a" style={{ marginLeft: 10 }}>Brasil</Text>
-                                </View>
-                            </View>
-                            
-                           
-                        </View>
-                    </View>
-                    
-                    
-                    
+                    <Carousel callbackParent={(index) => setIndexState(index)} options={props.all_teams_for_groups}
+                    groups
+                />
                 </View>
                 <Box
-                    options={props.groups}
+                    option={props.all_teams_for_groups[indexState]}
+                    games={matchsState}
                 />
             </ScrollView>
 
@@ -224,7 +81,9 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         token: state.authentication.token,
-        groups: state.groups.groups
+        all_teams_for_groups: state.groups.all_teams_for_groups,
+        groups: state.groups.groups,
+        matchs: state.groups.matchs,
     };
 };
 
