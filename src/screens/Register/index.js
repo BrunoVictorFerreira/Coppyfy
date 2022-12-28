@@ -8,66 +8,42 @@ import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import Input from "../../components/Input/index"
 import Link from "../../components/Link/index"
 import LinkWithText from "../../components/LinkWithText/index"
-import Text from "../../components/Text/index"
 import Button from "../../components/Button/index"
 import { connect } from "react-redux"
-import { validateEmail as validateEmailForgot, forgotPassword, cleanError } from '../../store/actions/authentication';
+import { register, cleanError } from '../../store/actions/authentication';
 import validateEmail from "../../utils/validateEmail";
 import * as Animatable from 'react-native-animatable';
+import Text from "../../components/Text/index"
 
-const ForgotPassword = (props) => {
-    const [code, setCode] = useState("")
+const Register = (props) => {
+    const [name, setName] = useState("")
     const [password, setPassword] = useState("")
     const [passwordConfirm, setPasswordConfirm] = useState("")
-    const [email, setEmail] = useState("victorbruno221@gmail.com")
+    const [email, setEmail] = useState("")
     const [isSecurityText, setIsSecurityText] = useState(true)
     const [isSecurityTextConfirm, setIsSecurityTextConfirm] = useState(true)
 
     const [step, setStep] = useState(1)
 
     const submit = () => {
-        props.dispatch(cleanError())
-        if (step == 1 && email != "") {
-
-            if (validateEmail(email)) {
-                props.dispatch(validateEmailForgot(email))
-            } else {
-                Alert.alert("Email inválido")
-            }
-            return
-        }
-
-        if (step == 2 && (code == "")) {
-            Alert.alert("Código inválido")
-        } else if (step == 2 && (password == "" && passwordConfirm == "")) {
-            Alert.alert("Preencha a senha")
-        } else if (step == 2 && (password != passwordConfirm)) {
-            Alert.alert("As senhas não correspondem")
+        if (step == 3) {
+            props.dispatch(cleanError())
+            props.dispatch(register(name, email, password, passwordConfirm))
+            // props.navigation.navigate('Login')
         } else {
-            props.dispatch(forgotPassword(code, password, passwordConfirm))
+            if (step == 1 && name == "") {
+                Alert.alert("Preencha o seu nome")
+            } else if (step == 2 && (email == "" || !validateEmail(email))) {
+                Alert.alert("verifique o email preenchido")
+            } else if (step == 3 && (password == "" || passwordConfirm == "")) {
+                Alert.alert("Preencha a senha e a confirmação de senha")
+            } else if (step == 3 && (password != passwordConfirm)) {
+                Alert.alert("As senhas não correspondem")
+            } else {
+                setStep(step + 1)
+            }
         }
     }
-
-    useEffect(() => {
-        console.warn("erroreeee", props.errorValidateEmail)
-        props.errorValidateEmail != null && Alert.alert(props.errorValidateEmail)
-    }, [props.errorValidateEmail])
-    useEffect(() => {
-        console.warn("messageValidateEmail", props.messageValidateEmail)
-        if (props.messageValidateEmail != null) {
-            Alert.alert(props.messageValidateEmail)
-            props.dispatch(cleanError())
-            setStep(step + 1)
-        }
-    }, [props.messageValidateEmail])
-    useEffect(() => {
-        console.warn("message", props.message)
-        if (props.message != null) {
-            Alert.alert(props.message)
-            props.navigation.navigate("Login")
-            props.dispatch(cleanError())
-        }
-    }, [props.message])
 
     useEffect(() => {
         console.warn("erroreeee", props.error)
@@ -97,10 +73,25 @@ const ForgotPassword = (props) => {
                 </View>
                 {/* <LinearGradient colors={['transparent', 'rgba(0,0,0,.7)', 'black']} style={styles.degrade} /> */}
                 <View style={styles.container}>
-                    <Animatable.View animation="slideInLeft" adjustsFontSizeToFit style={styles.text}><Text size={18} weight="medium" color="gray">Recuperação de Senha</Text></Animatable.View>
+                    <Animatable.View animation="slideInLeft" adjustsFontSizeToFit style={styles.text}><Text size={18} weight="medium" color="gray">Criação de Conta</Text></Animatable.View>
                     <Animatable.View animation="fadeIn" style={styles.inputs}>
                         {
-                            (step == 1) && (
+                            (step == 1 || step == 2) && (
+                                <Input
+                                    placeholder="Nome"
+                                    autoFocus={true}
+                                    value={name}
+                                    onChange={(text, un) => {
+                                        setName(un);
+
+                                        // console.log(text);
+                                    }}
+                                    keyboardType="numeric"
+                                />
+                            )
+                        }
+                        {
+                            step == 2 && (
                                 <Input
                                     placeholder="Email"
                                     value={email}
@@ -108,27 +99,13 @@ const ForgotPassword = (props) => {
                                         setEmail(un);
                                         // console.log(text);
                                     }}
-                                    leftIcon={"md-mail-open"}
-                                    leftIconColor="#b02b4a"
                                 />
                             )
                         }
 
                         {
-                            step >= 2 && (
+                            step >= 3 && (
                                 <>
-                                    <Input
-                                        type="custom"
-                                        placeholder="Código"
-                                        value={code}
-                                        mask="999999"
-                                        onChange={(text, un) => {
-                                            setCode(un);
-                                            // console.log(text);
-                                        }}
-                                        leftIcon={"md-code"}
-                                    leftIconColor="#b02b4a"
-                                    />
                                     <Input
                                         placeholder="Senha"
                                         onChange={(text) => {
@@ -137,8 +114,6 @@ const ForgotPassword = (props) => {
                                         }}
                                         isSecurityText={isSecurityText}
                                         value={password}
-                                        leftIcon={"md-lock-open-outline"}
-                                    leftIconColor="#b02b4a"
                                         icon={!isSecurityText ? "md-eye-outline" : "md-eye-off-outline"}
                                         iconColor="white"
                                         iconAction={() => {
@@ -153,8 +128,6 @@ const ForgotPassword = (props) => {
                                         }}
                                         isSecurityText={isSecurityTextConfirm}
                                         value={passwordConfirm}
-                                        leftIcon={"md-lock-open"}
-                                    leftIconColor="#b02b4a"
                                         icon={!isSecurityTextConfirm ? "md-eye-outline" : "md-eye-off-outline"}
                                         iconColor="white"
                                         iconAction={() => {
@@ -165,17 +138,38 @@ const ForgotPassword = (props) => {
                             )}
 
 
-                        <Button text={step >= 2 ? "Recuperar Senha" : "Próximo"} loading={props.loading} onPress={() => {
+                        <Button text={step == 3 ? "Cadastre-se no Choppyfy" : "Próximo"} loading={props.loading} onPress={() => {
                             submit()
                         }} />
-
                         <TouchableOpacity onPress={() => { props.navigation.goBack() }}>
                             <Text color="#b02b4a" style={{ textAlign: "center", marginTop: 20 }}>Ja possuo uma conta</Text>
                         </TouchableOpacity>
-                    </Animatable.View >
-                </View>
+
+                        <View style={styles.rodape}>
+                            <View style={{ flex: 3, height: 1, backgroundColor: "#b02b4a" }}></View>
+                            <View
+                                style={{ flex: 6, alignItems: "center" }}
+                            >
+                                <Text style={{ color: "#b02b4a", fontSize: scale(14) }}>ou cadastre com</Text>
+                            </View>
+                            <View style={{ flex: 3, height: 1, backgroundColor: "#b02b4a" }}></View>
+                        </View>
+                        <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
+                            <TouchableOpacity style={{ flex: 1, alignItems: "center" }}>
+                                <View style={{ backgroundColor: "white", alignItems: "center", height: 50, width: 50, justifyContent: "center", borderRadius: 100 }}>
+                                    <Image source={require("../../../assets/google.png")} style={{ resizeMode: "cover", height: 30, width: 30, borderRadius: 100 }} />
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={{ flex: 1, alignItems: "center" }}>
+                                <View style={{ backgroundColor: "#3b579d", height: 50, width: 50, justifyContent: "center", alignItems: "center", borderRadius: 100 }}>
+                                    <Image source={require("../../../assets/facebook.png")} style={{ resizeMode: "cover", height: 30, width: 30, borderRadius: 100 }} />
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    </Animatable.View>
+                </View >
             </>
-        </TouchableWithoutFeedback >
+        </TouchableWithoutFeedback>
     );
 }
 
@@ -186,6 +180,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
         paddingHorizontal: 40
+
     },
     image: {
         position: "absolute",
@@ -251,13 +246,9 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         token: state.authentication.token,
-        loadingValidateEmail: state.authentication.loadingValidateEmail,
-        messageValidateEmail: state.authentication.messageValidateEmail,
-        errorValidateEmail: state.authentication.errorValidateEmail,
-        loading: state.authentication.loadingForgotPassword,
-        message: state.authentication.messageForgotPassword,
-        error: state.authentication.errorForgotPassword,
+        loading: state.authentication.loadingCadastro,
+        error: state.authentication.errorCadastro,
     };
 };
 
-export default connect(mapStateToProps)(ForgotPassword);
+export default connect(mapStateToProps)(Register);

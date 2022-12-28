@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import GameDetails from "./src/screens/GameDetails"
 import Login from "./src/screens/Login"
-import SignIn from "./src/screens/SignIn"
+import Register from "./src/screens/Register"
 import ForgotPassword from "./src/screens/ForgotPassword"
 import Home from "./src/screens/Home"
 import Settings from "./src/screens/Settings"
@@ -13,7 +14,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Image, View, TouchableOpacity, Dimensions } from 'react-native';
+import { Image, View, TouchableOpacity, Dimensions, StatusBar } from 'react-native';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { Provider } from 'react-redux'
 import { store, persistor } from './src/utils/configureStore.js';
@@ -34,6 +35,11 @@ export default function App() {
         <ApolloProvider client={client}>
           <Provider store={store}>
             <NavigationContainer>
+              <StatusBar
+                barStyle="dark-content"
+                hidden={false}
+                translucent={false}
+              />
               <ConnectedRoot />
             </NavigationContainer>
           </Provider>
@@ -44,9 +50,6 @@ export default function App() {
 }
 
 const Root = (props) => {
-  useEffect(() => {
-    console.warn('props', props)
-  }, [props])
   const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
 
@@ -56,8 +59,9 @@ const Root = (props) => {
 
         <TouchableOpacity hitslop={{ top: 100, bottom: 100, right: 100, left: 100 }} onPress={() => { }}>
           <View style={{ left: 20, flexDirection: "row" }}>
-            <Image source={{ uri: props.user.photo }} style={{ resizeMode: "contain", width: 50, height: 50, borderRadius: 25 }} />
-            <View style={{marginLeft: 10, flexDirection: "column", alignItems: "flex-start", justifyContent: "center"}}>
+            {console.warn("props?.user?.photo", props?.user?.photo)}
+            <Image source={{ uri: props?.user?.photo }} style={{ resizeMode: "contain", width: 50, height: 50, borderRadius: 25 }} />
+            <View style={{ marginLeft: 10, flexDirection: "column", alignItems: "flex-start", justifyContent: "center" }}>
               <Text color="#606060" weight='bold' size={14}>Olá, {props.user.name?.split(" ")[0] + " " + props.user.name?.split(" ")[1]}</Text>
               <Text color="#ac1b3a" weight='medium' size={10}>Bem vindo a Catar 2022</Text>
             </View>
@@ -77,23 +81,23 @@ const Root = (props) => {
         </View> */}
         <View style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "flex-end" }}>
           <TouchableOpacity hitslop={{ top: 100, bottom: 100, right: 100, left: 100 }} onPress={() => { }}>
-              <View style={{position: "absolute", backgroundColor: "green", width: 10, height: 10, left: 10, borderRadius: 5, zIndex:2}}>
+            <View style={{ position: "absolute", backgroundColor: "green", width: 10, height: 10, left: 10, borderRadius: 5, zIndex: 2 }}>
 
-              </View>
-              <Ionicons
-                name={'ios-notifications-outline'}
-                size={20}
-                color={'#ac1b3a'}
-                style={{marginRight: 50}}
-              />
+            </View>
+            <Ionicons
+              name={'ios-notifications-outline'}
+              size={20}
+              color={'#ac1b3a'}
+              style={{ marginRight: 50 }}
+            />
           </TouchableOpacity>
-          
+
         </View>
       </View >
     )
   }
 
-  const Authenticated = () => {
+  const Tabs = () => {
     return (
       <Tab.Navigator
         screenOptions={({ route }) => ({
@@ -105,8 +109,6 @@ const Root = (props) => {
               size = 30
             } else if (route.name === 'Configurações') {
               iconName = focused ? 'ios-settings' : 'ios-settings-outline';
-            } else if (route.name === 'Meu Time') {
-              iconName = focused ? 'ios-star' : 'ios-star-outline';
             } else if (route.name === 'Ranking') {
               iconName = focused ? 'ios-podium' : 'ios-podium-outline';
             } else if (route.name === 'Notificações') {
@@ -154,19 +156,53 @@ const Root = (props) => {
         initialRouteName="Início"
       >
         <Tab.Screen name="Ranking" component={Ranking} />
-        <Tab.Screen name="Meu Time" component={Formation} />
+        {/* <Tab.Screen name="Meu Time" component={Formation} /> */}
         <Tab.Screen name="Início" component={Home} />
         <Tab.Screen name="Meu Perfil" component={Profile} />
         {/* <Tab.Screen name="Notificações" component={Notification} /> */}
         <Tab.Screen name="Configurações" component={Settings} />
       </Tab.Navigator >
+    )
+  }
+
+  const Authenticated = () => {
+    return (
+      <>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: '#ac1b3a',
+            },
+            headerTintColor: 'white',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+            headerBackVisible:true,
+            headerBackTitle: "voltar"
+          }}
+        >
+          <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }} />
+          <Stack.Screen name="GameDetails"
+          options={{
+            headerTitle: (props) => <Text size={16} weight="bold">Detalhes do Jogo</Text>,
+            // headerRight: () => (
+            //   <Button
+            //     onPress={() => alert('This is a button!')}
+            //     title="Info"
+            //     color="#fff"
+            //   />
+            // ),
+          }}
+          component={GameDetails}/>
+        </Stack.Navigator>
+      </>
     );
   }
   const Unauthenticated = () => {
     return (
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-        <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} />
+        <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ headerShown: false }} />
       </Stack.Navigator>
     );

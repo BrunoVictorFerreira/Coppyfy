@@ -139,12 +139,13 @@ export default function Formation({ navigation }) {
     const FirstClub = () => {
         return (
             <View style={{ flex: 1, flexDirection: "column" }}>
+                <Image source={require("../../../assets/brasoes/brasil.png")} style={{ width: 20, height: 20, position: "absolute", right: 0, top: 0, borderRadius: 10 }} />
                 <View style={{ flex: 1, flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
                     <TouchableOpacity>
                         <View style={[styles.button]}>
                             <Text weight="bold">{data[0]?.firstTeam?.firstLine[0]?.number}</Text>
                         </View>
-                        <Text weight="bold">{data[0]?.firstTeam?.firstLine[0]?.name}</Text>
+                        <Text weight="bold" size={12}>{data[0]?.firstTeam?.firstLine[0]?.name}</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-around", alignItems: "center" }}>
@@ -152,7 +153,7 @@ export default function Formation({ navigation }) {
                         <View style={[styles.button]}>
                             <Text weight="bold">{item?.number}</Text>
                         </View>
-                        <Text weight="bold">{item?.name}</Text>
+                        <Text weight="bold" size={12}>{item?.name}</Text>
                     </TouchableOpacity>)}
                 </View>
                 <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-around", alignItems: "center" }}>
@@ -160,7 +161,7 @@ export default function Formation({ navigation }) {
                         <View style={[styles.button]}>
                             <Text weight="bold">{item?.number}</Text>
                         </View>
-                        <Text weight="bold">{item?.name}</Text>
+                        <Text weight="bold" size={12}>{item?.name}</Text>
                     </TouchableOpacity>)}
                 </View>
                 <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-around", alignItems: "center" }}>
@@ -168,7 +169,7 @@ export default function Formation({ navigation }) {
                         <View style={[styles.button]}>
                             <Text weight="bold">{item?.number}</Text>
                         </View>
-                        <Text weight="bold">{item?.name}</Text>
+                        <Text weight="bold" size={12}>{item?.name}</Text>
                     </TouchableOpacity>)}
                 </View>
             </View>
@@ -178,12 +179,13 @@ export default function Formation({ navigation }) {
     const SecondClub = () => {
         return (
             <View style={{ flex: 1, flexDirection: "column" }}>
+                <Image source={require("../../../assets/brasoes/brasil.png")} style={{ width: 20, height: 20, position: "absolute", left: 0, bottom: 0, borderRadius: 10 }} />
                 <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-around", alignItems: "center" }}>
                     {data[0]?.secondTeam?.fourtyLine?.map(item => <TouchableOpacity>
                         <View style={[styles.button2]}>
                             <Text weight="bold">{item?.number}</Text>
                         </View>
-                        <Text weight="bold">{item?.name}</Text>
+                        <Text weight="bold" size={12}>{item?.name}</Text>
                     </TouchableOpacity>)}
                 </View>
                 <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-around", alignItems: "center" }}>
@@ -191,7 +193,7 @@ export default function Formation({ navigation }) {
                         <View style={[styles.button2]}>
                             <Text weight="bold">{item?.number}</Text>
                         </View>
-                        <Text weight="bold">{item?.name}</Text>
+                        <Text weight="bold" size={12}>{item?.name}</Text>
                     </TouchableOpacity>)}
                 </View>
                 <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-around", alignItems: "center" }}>
@@ -199,12 +201,12 @@ export default function Formation({ navigation }) {
                         <View style={[styles.button2]}>
                             <Text weight="bold">{item?.number}</Text>
                         </View>
-                        <Text weight="bold">{item?.name}</Text>
+                        <Text weight="bold" size={12}>{item?.name}</Text>
                     </TouchableOpacity>)}
                 </View>
                 <View style={{ flex: 1, flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
                     <TouchableOpacity>
-                        <Text weight="bold">{data[0]?.secondTeam?.firstLine[0]?.name}</Text>
+                        <Text weight="bold" size={12}>{data[0]?.secondTeam?.firstLine[0]?.name}</Text>
                         <View style={[styles.button2]}>
                             <Text weight="bold">{data[0]?.secondTeam?.firstLine[0]?.number}</Text>
                         </View>
@@ -219,7 +221,7 @@ export default function Formation({ navigation }) {
     }, [])
 
     return (
-        <SafeAreaView style={[styles.container, { paddingTop: StatusBar.currentHeight }]}>
+        <View style={[styles.container]}>
             <Animated.Image
                 style={[styles.image, {
                     opacity: rotateData,
@@ -229,14 +231,14 @@ export default function Formation({ navigation }) {
             {/* <Image source={require("../../../assets/campo.jpg")} style={[styles.image]} /> */}
             <FirstClub />
             <SecondClub />
-        </SafeAreaView>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: "rgba(0,0,0,.1)"
+        marginTop: 20,
+        flex: 1
     },
     image: {
         position: "absolute",
@@ -244,6 +246,7 @@ const styles = StyleSheet.create({
         zIndex: 0,
         width: "100%",
         height: "100%",
+        borderRadius: 20
     },
     button: {
         width: 30,
@@ -251,7 +254,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         borderRadius: 20,
-        backgroundColor: "red",
+        backgroundColor: "#ac1b3a",
         alignSelf: 'center'
     },
     button2: {

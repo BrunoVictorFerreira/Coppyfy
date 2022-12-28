@@ -12,6 +12,7 @@ import Carousel from "../../components/Carousel/index"
 
 const Ranking = (props) => {
 
+    const [loading, setLoading] = useState(false)
     const [indexState, setIndexState] = useState(0)
     const [matchsState, setMatchsState] = useState(null)
 
@@ -20,23 +21,25 @@ const Ranking = (props) => {
         props.dispatch(matchs(props.token));
     }, [])
     useEffect(() => {
+        setLoading(true)
         setMatchsState(props.matchs?.filter(item => item.first_team_description[0].group_id == (indexState + 1)))
+        setLoading(false)
     }, [indexState])
-
-
 
     return (
         <SafeAreaView style={[styles.container]}>
             <ScrollView>
-                <View style={{ 
-                    flex: 1, 
-                    backgroundColor: "#ac1b3a", padding: 20, flexDirection: "row" }}>
-                    <Carousel callbackParent={(index) => setIndexState(index)} options={props.all_teams_for_groups}
-                    groups
-                />
+                <View style={{
+                    flex: 1,
+                    backgroundColor: "#ac1b3a", padding: 20, flexDirection: "row"
+                }}>
+                    <Carousel callbackParent={(index) => setIndexState(index)} options={props?.all_teams_for_groups}
+                        groups
+                    />
                 </View>
                 <Box
-                    option={props.all_teams_for_groups[indexState]}
+                    loading={loading}
+                    option={props?.all_teams_for_groups?.[indexState]}
                     games={matchsState}
                 />
             </ScrollView>

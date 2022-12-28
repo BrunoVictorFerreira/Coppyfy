@@ -1,4 +1,4 @@
-import { GROUPS,MATCHS, TEAMS_FOR_GROUP, ALL_TEAMS_FOR_GROUP } from "../../utils/constants";
+import { GROUPS, MATCHS, TEAMS_FOR_GROUP, ALL_TEAMS_FOR_GROUP, LOGOUT } from "../../utils/constants";
 import { persistReducer } from "redux-persist";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native"
@@ -79,6 +79,28 @@ const groups = (state = {
                 all_teams_for_groups: action?.data?.data?.all_teams_for_group
             }
         case `${ALL_TEAMS_FOR_GROUP}_FAILURE`:
+            return {
+                ...state,
+                loading: false
+            }
+        case `${LOGOUT}_REQUEST`:
+            return {
+                ...state,
+                loading: true
+            }
+        case `${LOGOUT}_SUCCESS`:
+            console.log("action", action)
+            return {
+                ...state,
+                loading: null,
+                message: null,
+                error: null,
+                groups: null,
+                matchs: null,
+                teams_for_groups: null,
+                all_teams_for_groups: null,
+            }
+        case `${LOGOUT}_FAILURE`:
             return {
                 ...state,
                 loading: false

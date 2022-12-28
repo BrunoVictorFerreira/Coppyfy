@@ -57,23 +57,13 @@ export const forgotPassword = (code, password, password_confirmation) => {
 }
 
 export const logout = (token) => {
-    console.log("LOGOUT",{
-        type: LOGOUT,
-        $payload: {
-            url: "logout",
-            method: "POST",
-            headers:{
-                Authorization : `Bearer ${token}`
-            }
-        }
-    } )
     return {
         type: LOGOUT,
         $payload: {
             url: "logout",
             method: "POST",
-            headers:{
-                Authorization : `Bearer ${token}`
+            headers: {
+                Authorization: `Bearer ${token}`
             }
         }
     }

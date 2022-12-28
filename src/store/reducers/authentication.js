@@ -111,9 +111,9 @@ const authentication = (state = {
                 errorForgotPassword: action?.data?.message || action?.data?.error
             }
         case `${LOGOUT}_REQUEST`:
-            console.warn('action', action)
              return {
-                ...state
+                ...state,
+                loading: true
              }
         case `${LOGOUT}_SUCCESS`:
             console.warn('action', action)

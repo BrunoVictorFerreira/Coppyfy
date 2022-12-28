@@ -27,7 +27,7 @@ export const matchs = (token) => {
             $payload: {
                 token,
                 body: ` 
-                matchs{
+                matchs(orderBy: [{ column: DATE, order: ASC }]){
                     id
                 first_team
                 second_team
@@ -40,7 +40,10 @@ export const matchs = (token) => {
                 semi_turn
                 date
                 final_turn
-                    
+                result{
+                    first_team
+                    second_team
+                }
                     first_team_description{
                         name
                         group_id

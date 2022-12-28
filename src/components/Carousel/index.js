@@ -1,10 +1,14 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react'
 import Text from "../Text"
-import { View, FlatList } from 'react-native';
+import { View, FlatList, Dimensions, TouchableOpacity } from 'react-native';
 import VitrineNoticies from '../VitrineNoticies/index';
 import Groups from "../Groups/index"
+import Ionicons from '@expo/vector-icons/Ionicons';
 
-function Slide({ data, props, index }) {
+const SLIDER_WIDTH = Dimensions.get("window").width
+const ITEM_WIDTH = SLIDER_WIDTH * 0.10
+
+function Slide({ data, props, index, setIndex }) {
     const { item } = data
     if (props.vitrineNoticies) {
         return <VitrineNoticies option={item} index={index + 1} />
@@ -18,8 +22,6 @@ function Slide({ data, props, index }) {
                         </View>
                     })
                 }
-
-
             </View>
         </View>
     } else {

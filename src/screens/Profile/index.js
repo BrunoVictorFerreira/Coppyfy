@@ -37,7 +37,7 @@ const Profile = (props) => {
                             <Image source={{ uri: props?.user?.photo }} style={{ resizeMode: "conntain", width: "100%", height: "100%", borderRadius: 20 }} />
                         </TouchableOpacity>
                         <View style={{ flexDirection: "column", justifyContent: "center" }}>
-                            <Text weight="bold" style={{ marginTop: 10 }}>{props.user.name}</Text>
+                            <Text weight="bold" color="#b02b4a" style={{ marginTop: 10 }}>{props.user.name}</Text>
                         </View>
                     </View>
                 </View>
@@ -51,8 +51,8 @@ const Profile = (props) => {
                             // console.log(text);
                         }}
                         keyboardType="email-address"
-                        leftIcon={"person-outline"}
-                        leftIconColor="white"
+                        leftIcon={"person"}
+                        leftIconColor="#b02b4a"
                     />
                     <Input
                         label="Email"
@@ -63,8 +63,8 @@ const Profile = (props) => {
                             // console.log(text);
                         }}
                         keyboardType="email-address"
-                        leftIcon={"mail-open-outline"}
-                        leftIconColor="white"
+                        leftIcon={"mail-open"}
+                        leftIconColor="#b02b4a"
                     />
                     <Input
                         label="Número"
@@ -75,10 +75,10 @@ const Profile = (props) => {
                             // console.log(text);
                         }}
                         keyboardType="email-address"
-                        leftIcon={"ios-call-outline"}
-                        leftIconColor="white"
+                        leftIcon={"ios-call"}
+                        leftIconColor="#b02b4a"
                     />
-                    <Button text="salvar"/>
+                    <Button text="Salvar"/>
                 </View>
             </View >
         </TouchableWithoutFeedback>
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#fafafa"
+        backgroundColor: "#f0ece9"
     },
     image: {
         position: "absolute",

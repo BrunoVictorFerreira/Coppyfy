@@ -5,7 +5,7 @@ import { createIconSetFromFontello } from "react-native-vector-icons";
 import Text from "../../components/Text/index"
 
 const SCREEN_WIDTH = Dimensions.get("window").width
-const SLIDE_WIDTH = SCREEN_WIDTH * 0.77
+const SLIDE_WIDTH = SCREEN_WIDTH * 0.90
 
 export default function VitrineNoticies({ option, index }) {
     console.warn("option", option)

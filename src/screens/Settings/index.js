@@ -19,32 +19,32 @@ const Settings = (props) => {
     const [password, setPassword] = useState("")
 
     const [isSecurityText, setIsSecurityText] = useState(false)
-
+    console.log("props.token", props.token)
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={styles.container}>
                 {/* <Image source={require("../../../assets/home.jpg")} style={[styles.image]} /> */}
-                <LinearGradient colors={['transparent', 'rgba(154,16,49,.4)', '#9a1031']} style={styles.degrade} />
+                {/* <LinearGradient colors={['transparent', 'rgba(154,16,49,.4)', '#9a1031']} style={styles.degrade} /> */}
                 <View style={[styles.inputs, { marginTop: 20, flexDirection: "row", alignItems: "center", marginHorizontal: 20, flex: 1, justifyContent: "space-between" }]}>
-                    <View style={{ flex: 1, flexDirection: "row" }}>
+                    <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
                         <View style={{ width: 60, height: 60 }}>
-                        <Image source={{uri: props?.user?.photo}} style={{resizeMode: "conntain", width: "100%", height: "100%", borderRadius: 30}}/>
+                            <Image source={{ uri: props?.user?.photo }} style={{ resizeMode: "contain", width: "100%", height: "100%", borderRadius: 30 }} />
                         </View>
                         <View style={{ marginLeft: 10, flexDirection: "column", justifyContent: "center" }}>
-                            <Text>Bem Vindo,</Text>
-                            <Text weight="bold">{props.user.name}</Text>
+                            <Text weight="medium" color="#b02b4a" size={12}>Bem Vindo,</Text>
+                            <Text weight="bold" color="#b02b4a">{`${props.user.name.split(" ")[0]} ${props.user.name.split(" ")[1]}` }</Text>
                         </View>
                     </View>
                     <View>
-                        <TouchableOpacity 
-                        onPress={() => { props.dispatch(logout(props.token)) }}
-                        style={{alignItems: "center"}}>
+                        <TouchableOpacity
+                            onPress={() => { props.dispatch(logout(props.token)) }}
+                            style={{ alignItems: "center" }}>
                             <Ionicons
                                 name={"ios-log-out-outline"}
-                                size={20}
-                                color={"white"}
+                                size={18}
+                                color={"#b02b4a"}
                             />
-                            <Text weight="bold">Logout</Text>
+                            <Text weight="bold" color='#b02b4a'>Logout</Text>
                         </TouchableOpacity>
                         {/* <Button text="Logout" style={{ flex: 1 }}  /> */}
                     </View>
@@ -55,15 +55,15 @@ const Settings = (props) => {
                             <Ionicons
                                 name={"ios-person-outline"}
                                 size={20}
-                                color={"white"}
+                                color={"#b02b4a"}
                             />
-                            <Text size={14} weight="bold" style={{ marginLeft: 10 }}>Meu Perfil</Text>
+                            <Text size={14} weight="bold" style={{ marginLeft: 10 }} color='#b02b4a'>Meu Perfil</Text>
                         </View>
                         <View>
                             <Ionicons
                                 name={"chevron-forward"}
                                 size={20}
-                                color={"white"}
+                                color={"#b02b4a"}
                             />
                         </View>
                     </TouchableOpacity>
@@ -72,15 +72,15 @@ const Settings = (props) => {
                             <Ionicons
                                 name={"ios-star-outline"}
                                 size={20}
-                                color={"white"}
+                                color={"#b02b4a"}
                             />
-                            <Text size={14} weight="bold" style={{ marginLeft: 10 }}>Time Favorito</Text>
+                            <Text size={14} weight="bold" style={{ marginLeft: 10 }} color="#b02b4a">Time Favorito</Text>
                         </View>
                         <View>
                             <Ionicons
                                 name={"chevron-forward"}
                                 size={20}
-                                color={"white"}
+                                color={"#b02b4a"}
                             />
                         </View>
                     </TouchableOpacity>
@@ -89,15 +89,15 @@ const Settings = (props) => {
                             <Ionicons
                                 name={"ios-settings-outline"}
                                 size={20}
-                                color={"white"}
+                                color={"#b02b4a"}
                             />
-                            <Text size={14} weight="bold" style={{ marginLeft: 10 }}>Preferências</Text>
+                            <Text size={14} weight="bold" color="#b02b4a" style={{ marginLeft: 10 }}>Preferências</Text>
                         </View>
                         <View>
                             <Ionicons
                                 name={"chevron-forward"}
                                 size={20}
-                                color={"white"}
+                                color={"#b02b4a"}
                             />
                         </View>
                     </TouchableOpacity>
@@ -106,15 +106,15 @@ const Settings = (props) => {
                             <Ionicons
                                 name={"ios-help-outline"}
                                 size={20}
-                                color={"white"}
+                                color={"#b02b4a"}
                             />
-                            <Text size={14} weight="bold" style={{ marginLeft: 10 }}>Ajuda</Text>
+                            <Text size={14} weight="bold" color="#b02b4a" style={{ marginLeft: 10 }}>Ajuda</Text>
                         </View>
                         <View>
                             <Ionicons
                                 name={"chevron-forward"}
                                 size={20}
-                                color={"white"}
+                                color={"#b02b4a"}
                             />
                         </View>
                     </TouchableOpacity>
@@ -130,11 +130,11 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#fafafa"
+        backgroundColor: "#f0ece9"
     },
     box: {
         paddingVertical: 20,
-        borderBottomColor: "white",
+        borderBottomColor: "#b02b4a",
         borderBottomWidth: .5,
         flexDirection: "row",
         alignItems: "center",

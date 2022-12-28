@@ -5,7 +5,10 @@ import { URL_API_COPPYFY } from '@env';
 
 api = axios.create({
   baseURL: URL_API_COPPYFY,
+  headers: { 'Content-Type': 'application/json' }
 });
+
+console.warn("URL_API_COPPYFY", URL_API_COPPYFY)
 
 export default (restMiddlewareCreator = store => next => action => {
   if (!action || !action.$payload) {
@@ -86,17 +89,15 @@ export default (restMiddlewareCreator = store => next => action => {
     })
     .catch(error => {
       console.log('error', error)
-      if (error?.statusCode == 401 || error?.status == 401) {
-        store.dispatch(logout());
-      } else {
-        store.dispatch({
-          type: `${action.type}_FAILURE`,
-          response: error.response,
-          data: error.response && error.response.data,
-          $meta: $meta,
-        });
-        errorState(error.response);
-        loadingState(false);
-      }
+      store.dispatch(logout());
+      store.dispatch({
+        type: `${action.type}_FAILURE`,
+        response: error.response,
+        data: error.response && error.response.data,
+        $meta: $meta,
+      });
+      errorState(error.response);
+      loadingState(false);
+
     });
 });

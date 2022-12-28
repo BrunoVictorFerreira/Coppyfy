@@ -1,13 +1,20 @@
+import Ionicons from "@expo/vector-icons/Ionicons";
 import React from "react"
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 
 
-export default function Header({ text = "", onPress = null, stylesText = {} }) {
+export default function Header({ text = "", onPress = null, stylesText = {}, icon = "", iconStyle = "", iconPress = null }) {
     return (
-        <TouchableOpacity onPress={onPress}>
-            <Text style={[styles.link, stylesText ]}>{text}</Text>
-        </TouchableOpacity>
+        <View style={{flexDirection: "row", justifyContent: "space-between", backgroundColor: "#ac1b3a"}}>
+            <TouchableOpacity onPress={onPress}>
+                {
+                    icon != "" && <Ionicons name={icon} style={iconStyle} />
+                }
+            </TouchableOpacity>
+            <Text style={[styles.link, stylesText]}>{text}</Text>
+        </View>
+
     )
 }
 
@@ -17,7 +24,7 @@ const styles = StyleSheet.create({
         fontSize: scale(14),
         textAlign: "center",
         marginTop: 5,
-        color: "lightblue", 
+        color: "lightblue",
         textAlign: "right"
     },
 })

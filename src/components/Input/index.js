@@ -14,9 +14,9 @@ export default function Input({ label = "", type = "custom", placeholder = "", m
     return (
         <View>
             {
-                label != "" && <Text>{label}</Text>
+                label != "" && <Text color="#b02b4a">{label}</Text>
             }
-            <View style={[styles.container, { borderBottomWidth: borderBottom, borderBottomColor: out ? "white" : '#880218' }]}>
+            <View style={[styles.container, { borderBottomWidth: borderBottom, borderBottomColor: out ? "white" : '#b02b4a' }]}>
                 {
                     leftIcon != "" &&
                         (
@@ -34,10 +34,10 @@ export default function Input({ label = "", type = "custom", placeholder = "", m
                         }
                     }
                     secureTextEntry={isSecurityText}
-                    placeholderTextColor="white"
+                    placeholderTextColor="#b02b4a"
                     placeholder={placeholder}
-                    selectionColor="white"
-                    selectTextOnFocus="white"
+                    selectionColor="#b02b4a"
+                    selectTextOnFocus="#b02b4a"
                     // dont forget to set the "value" and "onChangeText" props
                     includeRawValueInChangeText={true}
                     onChangeText={onChange}
@@ -82,15 +82,15 @@ const styles = StyleSheet.create({
         marginBottom: moderateScale(20)
     },
     input: {
-        fontSize: scale(14),
+        fontSize: scale(15),
         paddingVertical: verticalScale(5),
         paddingHorizontal: moderateScale(15),
-        color: "white",
+        color: "#b02b4a",
         flex: 10,
 
     },
     icon: {
         flex: 1,
-        textAlign: "center"
+        textAlign: "right"
     }
 })
