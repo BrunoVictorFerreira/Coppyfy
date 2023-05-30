@@ -17,7 +17,7 @@ import Text from "../../components/Text/index"
 
 const Login = (props) => {
     const [email, setEmail] = useState("victorbruno221@gmail.com")
-    const [password, setPassword] = useState("Bru@%$2023")
+    const [password, setPassword] = useState("Bru@%$2022")
 
     const [isSecurityText, setIsSecurityText] = useState(true)
     const handleLogin = () => {
@@ -35,7 +35,6 @@ const Login = (props) => {
     }
 
     useEffect(() => {
-        console.warn("erroreeee", props.error)
         props.error != null && Alert.alert(props.error)
     }, [props.error])
 

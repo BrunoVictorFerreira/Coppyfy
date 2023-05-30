@@ -7,6 +7,7 @@ import thunk from 'redux-thunk'
 import authentication from '../store/reducers/authentication'
 import loadingAndError from '../store/reducers/loadingAndError'
 import groups from '../store/reducers/groups'
+import notifications from '../store/reducers/notifications.js'
 
 const middlewares = [restMiddlewareCreator, thunk]
 
@@ -16,7 +17,7 @@ const persistConfig = {
   whitelist: [],
 }
 
-const coppyfy = combineReducers({ authentication, groups, loadingAndError })
+const coppyfy = combineReducers({ authentication, groups, notifications, loadingAndError })
 
 const persistedReducer = persistReducer(persistConfig, coppyfy)
 

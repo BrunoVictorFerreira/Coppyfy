@@ -19,7 +19,7 @@ const Settings = (props) => {
     const [password, setPassword] = useState("")
 
     const [isSecurityText, setIsSecurityText] = useState(false)
-    console.log("props.token", props.token)
+    // console.log("props.token", props.token)
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={styles.container}>

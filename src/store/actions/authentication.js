@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { LOGIN, LOGOUT, VALIDATE_EMAIL, FORGOT_PASSWORD, CLEAN_ERROR } from '../../utils/constants'
+import { LOGIN, LOGOUT, VALIDATE_EMAIL, FORGOT_PASSWORD,  CLEAN_ERROR } from '../../utils/constants'
 
 export const logar = (email, password) => {
     return {
@@ -59,6 +59,7 @@ export const forgotPassword = (code, password, password_confirmation) => {
 export const logout = (token) => {
     return {
         type: LOGOUT,
+        isQL: false,
         $payload: {
             url: "logout",
             method: "POST",
@@ -68,6 +69,21 @@ export const logout = (token) => {
         }
     }
 }
+
+export const verifyToken = (token) => {
+    return {
+        type: VERIFY_TOKEN,
+        isQL: false,
+        $payload: {
+            url: "verify-token",
+            method: "POST",
+            body: {
+                token: `${token}`
+            }
+        }
+    }
+}
+
 export const cleanError = () => {
     return {
         type: CLEAN_ERROR

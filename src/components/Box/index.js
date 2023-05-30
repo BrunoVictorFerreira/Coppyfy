@@ -10,6 +10,7 @@ import { groups, teamsForGroup } from '../../store/actions/groups';
 import { connect } from "react-redux";
 import Link from "../../components/Link/index"
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { BRASOES } from "../../utils/brasoes";
 
 const SLIDER_WIDTH = Dimensions.get("window").width
 const ITEM_WIDTH = SLIDER_WIDTH * 0.88
@@ -34,13 +35,15 @@ const Box = ({ teams_for_groups, dispatch, token, title, option, games, loading 
     }
 
     const RowGame = ({ option }) => {
+        // console.log("option")
+        // console.log(option)
         return (
             <View style={{ flexDirection: "row", marginTop: 20, paddingHorizontal: 20 }}>
                 <View style={{ flex: 1 }}>
                     <View style={{ flexDirection: "row", marginBottom: 5, alignItems: 'center' }}>
                         <View style={{ backgroundColor: "#ac1b3a", marginRight: 5, borderRadius: 20, width: 33, height: 33, justifyContent: "center", alignItems: "center" }}>
                             <View style={{ backgroundColor: "white", borderRadius: 20, width: 32, height: 32, justifyContent: "center" }}>
-                                <Image source={{ uri: option?.first_team_description[0]?.brasao[0]?.url }} style={[styles.logo, { borderRadius: 100, height: 30, width: 30 }]} />
+                                <Image source={BRASOES[option.first_team_description[0].id - 1]?.url} style={[styles.logo, { borderRadius: 100, height: 30, width: 30 }]} />
                             </View>
                         </View>
                         <Text color="#ac1b3a" weight="extrabold" size={16}>{option?.first_team_description[0]?.name}</Text>
@@ -48,7 +51,7 @@ const Box = ({ teams_for_groups, dispatch, token, title, option, games, loading 
                     <View style={{ flexDirection: "row", alignItems: 'center' }}>
                         <View style={{ backgroundColor: "#ac1b3a", marginRight: 5, borderRadius: 20, width: 33, height: 33, justifyContent: "center", alignItems: "center" }}>
                             <View style={{ backgroundColor: "white", borderRadius: 20, width: 32, height: 32, justifyContent: "center" }}>
-                                <Image source={{ uri: option?.second_team_description[0]?.brasao[0]?.url }} style={[styles.logo, { borderRadius: 100, height: 30, width: 30 }]} />
+                                <Image source={BRASOES[option.second_team_description[0].id - 1]?.url} style={[styles.logo, { borderRadius: 100, height: 30, width: 30 }]} />
                             </View>
                         </View>
                         <Text color="#ac1b3a" weight="extrabold" size={16}>{option?.second_team_description[0]?.name}</Text>

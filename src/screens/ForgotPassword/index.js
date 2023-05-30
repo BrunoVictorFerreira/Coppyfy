@@ -49,11 +49,9 @@ const ForgotPassword = (props) => {
     }
 
     useEffect(() => {
-        console.warn("erroreeee", props.errorValidateEmail)
         props.errorValidateEmail != null && Alert.alert(props.errorValidateEmail)
     }, [props.errorValidateEmail])
     useEffect(() => {
-        console.warn("messageValidateEmail", props.messageValidateEmail)
         if (props.messageValidateEmail != null) {
             Alert.alert(props.messageValidateEmail)
             props.dispatch(cleanError())
@@ -61,7 +59,6 @@ const ForgotPassword = (props) => {
         }
     }, [props.messageValidateEmail])
     useEffect(() => {
-        console.warn("message", props.message)
         if (props.message != null) {
             Alert.alert(props.message)
             props.navigation.navigate("Login")
@@ -70,7 +67,6 @@ const ForgotPassword = (props) => {
     }, [props.message])
 
     useEffect(() => {
-        console.warn("erroreeee", props.error)
         props.error != null && Alert.alert(props.error)
     }, [props.error])
 

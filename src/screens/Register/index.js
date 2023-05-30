@@ -46,7 +46,6 @@ const Register = (props) => {
     }
 
     useEffect(() => {
-        console.warn("erroreeee", props.error)
         props.error != null && Alert.alert(props.error)
     }, [props.error])
 

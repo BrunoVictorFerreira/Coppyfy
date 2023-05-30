@@ -17,7 +17,7 @@ export default function Notification({ navigation }) {
     const [isSecurityText, setIsSecurityText] = useState(false)
 
     useEffect(() => {
-console.log("isSecurityText", isSecurityText)
+// console.log("isSecurityText", isSecurityText)
     }, [isSecurityText])
 
     return (

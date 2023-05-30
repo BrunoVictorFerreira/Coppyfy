@@ -1,0 +1,113 @@
+import React, { useEffect, useRef, useState } from "react";
+import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { scale } from "react-native-size-matters";
+import Text from "../../components/Text/index";
+import moment from "moment";
+import { useNavigation } from "@react-navigation/native";
+import { BRASOES } from "../../utils/brasoes";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { notifications } from "../../store/actions/notifications";
+import { connect } from "react-redux";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { Audio } from "expo-av";
+import { setAudioModeAsync } from "expo-av/build/Audio";
+import LottieView from "lottie-react-native";
+
+const Notificacoes = (props) => {
+  const navigation = useNavigation();
+  const [notificationsState, setNotificationsState] = useState([]);
+  const animation = useRef(null);
+
+  useEffect(() => {
+    // You can control the ref programmatically, rather than using autoPlay
+  });
+
+  useEffect(() => {
+    console.warn("props");
+    console.warn(props);
+    var array = [];
+    props.notifications != null &&
+      props.notifications
+        ?.filter((item) => item.status == 0)
+        ?.map((item) => {
+          array.push(item);
+        });
+    setNotificationsState(array);
+    // props?.notifications?.length > 0 && playSound()
+    // AsyncStorage.getItem('notifications').then((value) => {
+    //     var parse = JSON.parse(value)
+    //     setNotifications(parse)
+    // })
+  }, [props.notifications]);
+
+  useEffect(() => {
+    notificationsState?.length == 0 || notificationsState == null
+      ? animation.current?.pause()
+      : animation.current?.play();
+  }, [notificationsState]);
+
+  // useEffect(() => {
+  //    console.warn("notifications")
+  //    console.warn(notifications)
+  // }, [notifications])
+  return (
+    <TouchableOpacity
+      hitslop={{ top: 150, bottom: 150, right: 150, left: 150 }}
+      onPress={() => {
+        navigation.navigate("Notificacoes");
+      }}
+    >
+      <View
+        style={{
+          position: "absolute",
+          backgroundColor: "#880218",
+          width: 15,
+          height: 15,
+          left: 20,
+          top: 25,
+          borderRadius: 10,
+          zIndex: 2,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Text size={12} weight="medium">
+          {notificationsState?.length}
+        </Text>
+      </View>
+      {console.warn("notificationsState?.length")}
+      {console.warn(notificationsState)}
+      {notificationsState?.length == 0 || notificationsState == null ? (
+        <Ionicons
+          name={"ios-notifications-outline"}
+          size={25}
+          color={"#ac1b3a"}
+          style={{ marginRight: 50, marginTop: 5 }}
+        />
+      ) : (
+        <LottieView
+          loop
+          autoPlay
+          ref={animation}
+          style={{
+            marginRight: 40,
+            width: 45,
+            height: 45,
+            backgroundColor: "#eee",
+          }}
+          source={require("../../../assets/bell.json")}
+        />
+      )}
+    </TouchableOpacity>
+  );
+};
+
+const mapStateToProps = (state) => {
+  return {
+    token: state.authentication.token,
+    notifications: state.notifications.notifications,
+  };
+};
+
+export default connect(mapStateToProps)(Notificacoes);

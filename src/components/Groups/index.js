@@ -9,13 +9,12 @@ import IfComponent from "../../components/IfComponent/index"
 import { groups, teamsForGroup } from '../../store/actions/groups';
 import { connect } from "react-redux";
 import Link from "../../components/Link/index"
+import {BRASOES} from "../../utils/brasoes"
 
 const SLIDER_WIDTH = Dimensions.get("window").width
 const ITEM_WIDTH = SLIDER_WIDTH * 0.80
 
 const Groups = ({ option, index }) => {
-    console.warn("option", option)
-    console.warn("index", index)
     const optionsPerPage = [2, 3, 4];
     const [itemsPerPage, setItemsPerPage] = React.useState(optionsPerPage[0]);
     return (
@@ -47,9 +46,11 @@ const Groups = ({ option, index }) => {
                     </DataTable.Header>
                     {
                         option != null && option?.teams?.map((item, key) => <DataTable.Row style={{ alignItems: "center", justifyContent: "center" }}>
+                            {/* {console.log("item")} */}
+                            {/* {console.log(item)} */}
                             <DataTable.Cell style={{ flex: 4, alignItems: "center" }}>
                                 <Text size={12} color="#606060" weight="bold">{key + 1} - </Text>
-                                <Image source={{ uri: item?.brasao[0]?.url }} style={[styles.logo, { borderRadius: 100, height: 20, width: 20 }]} />
+                                <Image source={BRASOES[item.id - 1]?.url} style={[styles.logo, { borderRadius: 100, height: 20, width: 20 }]} />
                                 <Text size={12} color="#606060" weight="medium" style={{ marginLeft: 15 }}> {item?.name}</Text>
                             </DataTable.Cell>
                             <DataTable.Cell numeric style={{ flex: 1 }}><Text color="#606060" size={12}>{item?.informations[0]?.pts}</Text></DataTable.Cell>
